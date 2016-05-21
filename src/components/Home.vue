@@ -1,7 +1,12 @@
 <template>
   <div id="home">
-    <header-el></header-el>
-    <main></main>
+    <div class="container">
+      <header-el></header-el>
+      <main>
+        <h1>Spoken Engish for Everyone</h1>
+        <div class="button">Get started</div>
+      </main>
+    </div>
     <footer></footer>
   </div>
 </template>
@@ -15,7 +20,9 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+@import '../mixins/buttons';
+
 * {
   margin: 0;
   padding: 0;
@@ -23,22 +30,46 @@ export default {
   font-family: "Roboto","Helvetica","Arial",sans-serif;
 }
 
-body {
-  min-height: 100%;
+html, body {
+  height: 100%;
 }
 
 #home {
-  display: flex;
-  flex-direction: column;
+  display: block;
+  min-height: 100%;
+}
+
+.container {
+  position: relative;
+  left: 0;
+  top: 0;
   min-height: 100%;
 }
 
 main {
-  background-color: blue;
+  position: relative;
+  display: block;
+  text-align: center;
+  box-sizing: border-box;
+  // background: #FFEB3B;
+  
+  h1 {
+    font-size: 34px;
+    font-weight: 400;
+    padding: 34px;
+    color: #607D8B;
+  }
+  
+  .button {
+    @include colored-button-white;
+    @include raised;
+  }
 }
 
 footer {
-  background-color: orange;
-  height: 54px;
+  position: relative;
+  margin-top: -56px;
+  height: 56px;
+  background: #424242;
 }
 </style>
