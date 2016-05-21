@@ -1,6 +1,6 @@
 # lingvino
 
-> Lingvino.com website
+> lingvino.com website
 
 ## Build Setup
 

@@ -1,8 +1,16 @@
 import Vue from 'vue';
-import App from './App';
+import Router from 'vue-router';
+import Home from './components/Home';
+Vue.use(Router);
 
 /* eslint-disable no-new */
-new Vue({
-  el: 'body',
-  components: { App },
+const router = new Router();
+const App = Vue.extend({});
+
+router.map({
+  '/': {
+    component: Home,
+  },
 });
+
+router.start(App, 'body');
