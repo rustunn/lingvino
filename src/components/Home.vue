@@ -1,25 +1,26 @@
 <template>
   <div id="home">
-    <header></header>
+    <header-el></header-el>
     <main></main>
     <footer></footer>
   </div>
 </template>
 
 <script>
-
+import Header from './Header';
 export default {
   components: {
-
+    'header-el': Header,
   },
 };
 </script>
 
-<style scoped>
+<style>
 * {
   margin: 0;
   padding: 0;
   border: 0;
+  font-family: "Roboto","Helvetica","Arial",sans-serif;
 }
 
 body {
@@ -30,11 +31,6 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100%;
-}
-
-header {
-  height: 54px;
-  background-color: green;
 }
 
 main {
