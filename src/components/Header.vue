@@ -1,16 +1,21 @@
 <template>
   <header>
     <div class="title">
-      <div class="menu"></div>
-      <span class="name">Lingvino</span>
+      <div v-if="showMenu"  class="menu"></div>
+      <span v-link="{ path: '/' }" class="name">Lingvino</span>
     </div>
-    <button class="button">Sign In</button>
+    <button v-link="{ path: 'signin' }" class="button">Sign In</button>
   </header>
 </template>
 
 <sctipt>
 export default {
-
+  computed: {
+    showMenu() {
+      let show = false;
+      if (this.$route.path !== '/') show = true;
+    },
+  },
 };
 </sctipt>
 
