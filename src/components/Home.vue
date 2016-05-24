@@ -1,14 +1,12 @@
 <template>
-  <div id="home">
-    <div class="container">
-      <header-el></header-el>
-      <main>
-        <h1>Spoken Engish for Everyone</h1>
-        <div class="button">Get started</div>
-      </main>
-    </div>
-    <footer></footer>
+  <div class="container">
+    <header-el></header-el>
+    <main>
+      <h1>Spoken Engish for Everyone</h1>
+      <div class="button">Get started</div>
+    </main>
   </div>
+  <footer></footer>
 </template>
 
 <script>
@@ -28,22 +26,19 @@ export default {
   padding: 0;
   border: 0;
   font-family: "Roboto","Helvetica","Arial",sans-serif;
+  -webkit-overflow-scrolling: touch;
+  overflow-scrolling: touch;
 }
 
 html, body {
   height: 100%;
 }
 
-#home {
-  display: block;
-  min-height: 100%;
-}
-
 .container {
-  position: relative;
-  left: 0;
-  top: 0;
   min-height: 100%;
+  margin-bottom: -2rem;
+  padding-bottom: 2rem;
+  box-sizing: border-box;
 }
 
 main {
@@ -67,9 +62,11 @@ main {
 }
 
 footer {
-  position: relative;
-  margin-top: -56px;
-  height: 56px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 1.8rem 0 1.8rem;
+  background: #282828;
+  height: 2rem;
   background: #424242;
 }
 </style>
