@@ -3,7 +3,11 @@ import Vuex from 'vuex';
 
 Vue.use(Vuex);
 
-const state = {};
+const state = {
+  user: {
+    isAnonymous: true,
+  },
+};
 
 const mutations = {};
 
