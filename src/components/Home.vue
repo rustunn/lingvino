@@ -5,6 +5,29 @@
   </main>
 </template>
 
+<script>
+import {
+  isSignedIn,
+} from '../vuex/getters';
+
+export default {
+  route: {
+    activate(transition) {
+      if (this.isSignedIn) {
+        transition.redirect('/learn');
+      } else {
+        transition.next();
+      }
+    },
+  },
+  vuex: {
+    getters: {
+      isSignedIn,
+    },
+  },
+};
+</script>
+
 <style lang="scss">
 @import '../mixins/buttons';
 

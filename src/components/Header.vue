@@ -4,20 +4,51 @@
       <div v-if="showMenu"  class="menu"></div>
       <span v-link="{ path: '/' }" class="name">Lingvino</span>
     </div>
-    <button v-link="{ path: 'signin' }" class="button">Sign In</button>
+    <button v-if="!isSignedIn" v-link="{ path: 'signin' }" class="button">Sign In</button>
+    <button v-if="isSignedIn" @click="signOut" class="button">Sign Out</button>
   </header>
 </template>
 
-<sctipt>
+<script>
+import firebase from 'firebase';
+
+import {
+  isSignedIn,
+} from '../vuex/getters';
+
+import {
+  signedOut,
+} from '../vuex/actions';
+
 export default {
   computed: {
     showMenu() {
       let show = false;
       if (this.$route.path !== '/') show = true;
+      return show;
+    },
+  },
+  methods: {
+    signOut() {
+      firebase.auth().signOut()
+      .then(() => {
+        this.signedOut();
+        this.$route.router.go('/');
+      }, (error) => {
+        console.log(error);
+      });
+    },
+  },
+  vuex: {
+    getters: {
+      isSignedIn,
+    },
+    actions: {
+      signedOut,
     },
   },
 };
-</sctipt>
+</script>
 
 <style scoped lang="scss">
 @import '../mixins/colors';

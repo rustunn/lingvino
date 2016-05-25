@@ -10,6 +10,13 @@
 import firebase from 'firebase';
 import Header from './Header';
 
+import store from '../vuex/store';
+
+import {
+  signedIn,
+  signedOut,
+} from '../vuex/actions';
+
 export default {
   created() {
     const config = {
@@ -20,10 +27,24 @@ export default {
     };
 
     firebase.initializeApp(config);
+
+    const user = firebase.auth().currentUser;
+    if (user) {
+      this.signedIn(user);
+    } else {
+      this.signedOut();
+    }
+  },
+  vuex: {
+    actions: {
+      signedIn,
+      signedOut,
+    },
   },
   components: {
     'header-el': Header,
   },
+  store,
 };
 </script>
 

@@ -9,6 +9,10 @@
 <script>
 import firebase from 'firebase';
 
+import {
+  signedIn,
+} from '../vuex/actions';
+
 export default {
   data() {
     return {
@@ -19,12 +23,18 @@ export default {
   methods: {
     signin() {
       firebase.auth().signInWithEmailAndPassword(this.email, this.password)
-      .then((data) => {
-        console.log(data);
+      .then((user) => {
+        this.signedIn(user);
+        this.$router.go('/learn');
       })
       .catch((error) => {
         console.log(error);
       });
+    },
+  },
+  vuex: {
+    actions: {
+      signedIn,
     },
   },
 };
