@@ -24,7 +24,7 @@ export default {
   computed: {
     showMenu() {
       let show = false;
-      if (this.$route.path !== '/') show = true;
+      if (this.$route.path === '/learn') show = true;
       return show;
     },
   },
