@@ -4,7 +4,7 @@
       <div v-if="showMenu"  class="menu"></div>
       <span v-link="{ path: '/' }" class="name">Lingvino</span>
     </div>
-    <button v-if="!isSignedIn" v-link="{ path: 'signin' }" class="button">Sign In</button>
+    <button v-if="!isSignedIn" v-link="{ path: '/signin' }" class="button">Sign In</button>
     <button v-if="isSignedIn" @click="signOut" class="button">Sign Out</button>
   </header>
 </template>

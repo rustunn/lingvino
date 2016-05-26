@@ -25,6 +25,9 @@ export default {
       firebase.auth().signInWithEmailAndPassword(this.email, this.password)
       .then((user) => {
         this.signedIn(user);
+        firebase.database().ref(`users/${user.uid}`).set({
+          levels: 5,
+        });
         this.$router.go('/learn');
       })
       .catch((error) => {

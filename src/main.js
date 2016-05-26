@@ -4,6 +4,7 @@ import App from './components/App';
 import Home from './components/Home';
 import SignIn from './components/SignIn';
 import Learn from './components/Learn';
+import GetStarted from './components/GetStarted';
 import { sync } from 'vuex-router-sync';
 import store from './vuex/store';
 import VueValidator from 'vue-validator';
@@ -25,6 +26,17 @@ router.map({
   '/learn': {
     component: Learn,
   },
+  '/get-started/:step': {
+    name: 'get-started',
+    component: GetStarted,
+  },
+});
+
+router.redirect({
+  '/get-started': '/get-started/1',
+
+  // redirect any not-found route to home
+  '*': '/',
 });
 
 router.start(App, '#app');

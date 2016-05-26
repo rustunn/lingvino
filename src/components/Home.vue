@@ -1,7 +1,9 @@
 <template>
   <main>
-    <h1>Spoken Engish for Everyone</h1>
-    <div class="button">Get started</div>
+    <div class="card">
+      <h1>Spoken Engish for Everyone</h1>
+      <div v-link:="{ name: 'get-started', params: { step: 1 } }" class="button">Get started</div>
+    </div>
   </main>
 </template>
 
@@ -30,6 +32,7 @@ export default {
 
 <style lang="scss">
 @import '../mixins/buttons';
+@import '../mixins/card';
 
 main {
   position: relative;
@@ -37,16 +40,21 @@ main {
   text-align: center;
   box-sizing: border-box;
   
-  h1 {
-    font-size: 34px;
-    font-weight: 400;
-    padding: 34px;
-    color: #607D8B;
-  }
+  .card {
+    @include card;
+    align-items: center;
   
-  .button {
-    @include colored-button-white;
-    @include raised;
+    h1 {
+      font-size: 34px;
+      font-weight: 400;
+      padding: 34px;
+      color: #607D8B;
+    }
+    
+    .button {
+      @include colored-button-white;
+      @include raised;
+    }
   }
 }
 </style>
