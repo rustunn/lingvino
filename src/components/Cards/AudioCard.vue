@@ -28,6 +28,9 @@ export default {
     endTime() {
       return this.audio.duration;
     },
+    currentTime() {
+
+    },
   },
   methods: {
 
