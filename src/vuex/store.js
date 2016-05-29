@@ -3,6 +3,8 @@ import Vuex from 'vuex';
 
 Vue.use(Vuex);
 
+import GetStarted from './modules/GetStarted/store-module';
+
 import {
   SIGNED_IN,
   SIGNED_OUT,
@@ -31,4 +33,7 @@ const mutations = {
 export default new Vuex.Store({
   state,
   mutations,
+  modules: {
+    GetStarted,
+  },
 });
