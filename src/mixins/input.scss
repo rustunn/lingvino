@@ -13,15 +13,9 @@
   margin: 0em 0em 0em 0em;
   font: 12px Arial;
   -webkit-writing-mode: horizontal-tb;
-  -webkit-appearance: textfield;
+  appearance: textfield;
   background-color: white;
-  border-image-source: initial;
-  border-image-slice: initial;
-  border-image-width: initial;
-  border-image-outset: initial;
-  border-image-repeat: initial;
-  -webkit-rtl-ordering: logical;
-  -webkit-user-select: text;
+  user-select: none;
   cursor: auto;
   padding: 1px;
   border-width: 2px;
@@ -49,4 +43,18 @@
   &:focus {
     border-color: $mainColor;
   }
+}
+
+@mixin range {
+  @include input;
+  
+  height: 2px;
+  background: 0 0;
+  user-select: none;
+  outline: 0;
+  padding: 0;
+  color: #3f51b5;
+  align-self: center;
+  z-index: 1;
+  cursor: pointer;
 }
