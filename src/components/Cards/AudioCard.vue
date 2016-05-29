@@ -9,8 +9,8 @@
       <div class="progress-bar">
         <div class="bar" :style="bufferWidth"></div>
         <div class="bar" :style="barWidth"></div>
+        <input type="range" class="slider" min="0" :max="duration" v-model="currentTime" @touchStart="sliderTouched" @touchEnd="sliderReleased">
       </div>
-      <!-- <input type="range" class="slider" min="0" :max="duration" v-model="currentTime" @touchStart="sliderTouched" @touchEnd="sliderReleased"> -->
       <audio :src="src"></audio>
     </div>
   </div>
@@ -25,6 +25,7 @@ export default {
   data() {
     return {
       audio: undefined,
+      playing: false,
       duration: 0,
       currentTime: 0,
       buffered: 0,
@@ -35,7 +36,7 @@ export default {
     this.addAudioEvents();
   },
   beforeDestroy() {
-    this.audio.pause();
+    this.pause();
     this.audio.src = '';
   },
   computed: {
@@ -57,8 +58,10 @@ export default {
       };
 
       this.audio.ontimeupdate = () => {
-        this.currentTime = this.audio.currentTime;
-        this.buffered = this.audio.buffered.end(0);
+        if (this.playing) { // allows click on slider
+          this.currentTime = this.audio.currentTime;
+          this.buffered = this.audio.buffered.end(0);
+        }
       };
 
       this.audio.onended = () => {
@@ -66,18 +69,23 @@ export default {
       };
 
       this.audio.onprogress = () => {
-        this.audio.play();
+        this.play();
       };
     },
     sliderTouched() {
-      console.log(1);
-      this.audio.pause();
-      this.audio.currentTime = this.currentTime;
+      this.pause();
     },
     sliderReleased() {
-      console.log(2);
       this.audio.currentTime = this.currentTime;
+      this.play();
+    },
+    play() {
+      this.playing = true;
       this.audio.play();
+    },
+    pause() {
+      this.playing = false;
+      this.audio.pause();
     },
   },
   filters: {
@@ -149,12 +157,6 @@ export default {
       }
     }
     
-    .slider {
-      @include range;
-      width: 100%;
-      height: 2px;
-    }
-    
     .progress-bar {
       position: relative;
       width: 100%;
@@ -171,6 +173,16 @@ export default {
         &:first-child {
           background-color: transparentize($mainColor, 0.8);
         }
+      }
+      
+      .slider {
+        @include range;
+        position: absolute;
+        left: 0;
+        top: 0;
+        background: transparent;
+        width: 100%;
+        height: 0px;
       }
     }
   }

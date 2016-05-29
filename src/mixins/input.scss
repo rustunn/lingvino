@@ -14,6 +14,7 @@
   font: 12px Arial;
   -webkit-writing-mode: horizontal-tb;
   appearance: textfield;
+  -webkit-appearance: textfield;
   background-color: white;
   user-select: none;
   cursor: auto;
@@ -50,11 +51,7 @@
   
   height: 2px;
   background: 0 0;
-  user-select: none;
-  outline: 0;
   padding: 0;
-  color: #3f51b5;
-  align-self: center;
   z-index: 1;
   cursor: pointer;
 }
