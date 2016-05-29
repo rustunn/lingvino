@@ -7,8 +7,10 @@
         <span class="end-time">{{ duration | toTime }}</span>
       </div>
       <div class="progress-bar">
+        <div class="bar" :style="bufferWidth"></div>
         <div class="bar" :style="barWidth"></div>
       </div>
+      <!-- <input type="range" class="slider" min="0" :max="duration" v-model="currentTime" @touchStart="sliderTouched" @touchEnd="sliderReleased"> -->
       <audio :src="src"></audio>
     </div>
   </div>
@@ -25,6 +27,7 @@ export default {
       audio: undefined,
       duration: 0,
       currentTime: 0,
+      buffered: 0,
     };
   },
   attached() {
@@ -41,21 +44,40 @@ export default {
         width: `${this.currentTime / this.duration * 100}%`,
       };
     },
+    bufferWidth() {
+      return {
+        width: `${this.buffered / this.duration * 100}%`,
+      };
+    },
   },
   methods: {
     addAudioEvents() {
-      this.audio.onloadedmetadata = () => {
+      this.audio.ondurationchange = () => {
         this.duration = this.audio.duration;
-        this.audio.play();
       };
 
       this.audio.ontimeupdate = () => {
         this.currentTime = this.audio.currentTime;
+        this.buffered = this.audio.buffered.end(0);
       };
 
       this.audio.onended = () => {
         this.$emit('audio-ended');
       };
+
+      this.audio.onprogress = () => {
+        this.audio.play();
+      };
+    },
+    sliderTouched() {
+      console.log(1);
+      this.audio.pause();
+      this.audio.currentTime = this.currentTime;
+    },
+    sliderReleased() {
+      console.log(2);
+      this.audio.currentTime = this.currentTime;
+      this.audio.play();
     },
   },
   filters: {
@@ -91,6 +113,7 @@ export default {
 @import '../../mixins/buttons';
 @import '../../mixins/card';
 @import '../../mixins/colors';
+@import '../../mixins/input';
 
 .audio-card {
   @include card;
@@ -104,6 +127,7 @@ export default {
   }
   
   .player {
+    position: relative;
     width: 100%;
     
     .timing {
@@ -125,17 +149,28 @@ export default {
       }
     }
     
-    .progress-bar {
+    .slider {
+      @include range;
       width: 100%;
-      height: 5px;
+      height: 2px;
+    }
+    
+    .progress-bar {
+      position: relative;
+      width: 100%;
+      height: 2px;
       font-size: 0;
-      background-color: transparentize($mainColor, 0.8);
       
       .bar {
-        position: relative;
-        display: inline-block;
+        position: absolute;
+        left:0;
+        top: 0;
         height: 100%;
         background: $mainColor;
+        
+        &:first-child {
+          background-color: transparentize($mainColor, 0.8);
+        }
       }
     }
   }
