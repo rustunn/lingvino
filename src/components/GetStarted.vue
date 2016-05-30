@@ -1,12 +1,13 @@
 <template>
   <div id="get-strated">
-    <audio-card text="Lesson Title" src="/static/audio/story1_1.mp3" v-on:audio-ended="audioEnded"></audio-card>
+    <ranking-card></ranking-card>
   </div>
 </template>
 
 <script>
 import InfoCard from './Cards/InfoCard';
 import AudioCard from './Cards/AudioCard';
+import RankingCard from './Cards/RankingCard';
 
 export default {
   data() {
@@ -26,6 +27,7 @@ export default {
   components: {
     InfoCard,
     AudioCard,
+    RankingCard,
   },
 };
 </script>
