@@ -2,12 +2,14 @@
   <main>
     <div class="card">
       <h1>Spoken English for Everyone</h1>
-      <div v-link:="{ name: 'get-started', params: { step: 1 } }" class="button">Get started</div>
+      <button v-link:="{ name: 'get-started', params: { step: 1 } }" :colored="true" text-color="light" :raised="true">Get started</button>
     </div>
   </main>
 </template>
 
 <script>
+import Button from './Common/Button';
+
 import {
   isSignedIn,
 } from '../vuex/getters';
@@ -27,12 +29,15 @@ export default {
       isSignedIn,
     },
   },
+  components: {
+    Button,
+  },
 };
 </script>
 
 <style lang="scss">
-@import '../mixins/buttons';
 @import '../mixins/card';
+@import '../mixins/colors';
 
 main {
   position: relative;
@@ -49,11 +54,6 @@ main {
       font-weight: 400;
       padding: 34px;
       color: $grey;
-    }
-    
-    .button {
-      @include colored-button-white;
-      @include raised;
     }
   }
 }

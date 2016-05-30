@@ -4,13 +4,14 @@
       <div v-if="showMenu"  class="menu"></div>
       <span v-link="{ path: '/' }" class="name">Lingvino</span>
     </div>
-    <button v-if="isSignedIn" @click="signOut" class="button">Sign Out</button>
-    <button v-else v-link="{ path: '/signin' }" class="button">Sign In</button>
+    <button v-if="isSignedIn" @click="signOut" text-color="light" :colored="false" :raised="false">Sign Out</button>
+    <button v-if="!isSignedIn && !isSignInPage" v-link="{ path: '/signin' }" text-color="light" :colored="false" :raised="false">Sign In</button>
   </header>
 </template>
 
 <script>
 import firebase from 'firebase';
+import Button from './Common/Button';
 
 import {
   isSignedIn,
@@ -26,6 +27,11 @@ export default {
       let show = false;
       if (this.$route.path === '/learn') show = true;
       return show;
+    },
+    isSignInPage() {
+      let signin = false;
+      if (this.$route.path === '/signin') signin = true;
+      return signin;
     },
   },
   methods: {
@@ -47,12 +53,14 @@ export default {
       signedOut,
     },
   },
+  components: {
+    Button,
+  },
 };
 </script>
 
 <style scoped lang="scss">
 @import '../mixins/colors';
-@import '../mixins/buttons';
 @import '../mixins/typography';
 
 header {
@@ -64,11 +72,8 @@ header {
   background-color: $mainColor;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
   z-index: 2;
-}
-
-.button {
-  @include colored-button-white;
-  margin-right: 6px;
+  padding-right: 6px;
+  box-sizing: border-box;
 }
 
 .title {

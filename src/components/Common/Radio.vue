@@ -3,17 +3,15 @@
     <div class="selector" :class="{ 'checked': checked }">
       <div v-if="checked" transition="fill" class="fill"></div>
     </div>
-    <span>{{label}}</span>
+    <span>
+      <slot></slot>
+    </span>
   </div>
 </template>
 
 <script>
 export default {
   props: {
-    label: {
-      type: String,
-      required: true,
-    },
     checked: {
       type: Boolean,
       default: false,

@@ -1,11 +1,15 @@
 <template>
   <div class="ranking-card">
-    <radio v-for="option in options" :label="option.label" :checked="option === checkedOption" :value="option.value" v-on:checked="optionChecked"></radio>
+    <div class="options-container">
+      <radio v-for="option in options" :checked="option === checkedOption" :value="option.value" v-on:checked="optionChecked">{{option.label}}</radio>
+    </div>
+    <button :raised="true" :colored="true" text-color="light" @click="buttonClicked">Rate</button>
   </div>
 </template>
 
 <script>
 import Radio from '../Common/Radio';
+import Button from '../Common/Button';
 
 export default {
   data() {
@@ -48,9 +52,13 @@ export default {
     optionChecked(value) {
       this.checkedValue = value;
     },
+    buttonClicked() {
+      this.$emit('clicked', value);
+    },
   },
   components: {
     Radio,
+    Button,
   },
 };
 </script>
@@ -61,6 +69,10 @@ export default {
 
 .ranking-card {
   @include card;
-  align-items: left;
+  align-items: center;
+  
+  .options-container {
+    margin: 6px 0;
+  }
 }
 </style>
