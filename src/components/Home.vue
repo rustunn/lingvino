@@ -1,7 +1,7 @@
 <template>
   <main>
     <div class="card">
-      <h1>Spoken Engish for Everyone</h1>
+      <h1>Spoken English for Everyone</h1>
       <div v-link:="{ name: 'get-started', params: { step: 1 } }" class="button">Get started</div>
     </div>
   </main>
