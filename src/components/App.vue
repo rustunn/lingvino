@@ -55,7 +55,6 @@ export default {
   margin: 0;
   padding: 0;
   border: 0;
-  font-family: "Roboto","Helvetica","Arial",sans-serif;
   -webkit-overflow-scrolling: touch;
   overflow-scrolling: touch;
 }

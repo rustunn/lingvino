@@ -53,6 +53,7 @@ export default {
 <style scoped lang="scss">
 @import '../mixins/colors';
 @import '../mixins/buttons';
+@import '../mixins/typography';
 
 header {
   display: flex;
@@ -77,14 +78,12 @@ header {
 }
 
 .name {
+  @include header;
+  
   display: block;
   position: relative;
-  font-size: 20px;
-  color: white;
   left: 16px;
   line-height: 1;
-  letter-spacing: .02em;
-  font-weight: 400;
   box-sizing: border-box;
 }
 

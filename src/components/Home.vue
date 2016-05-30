@@ -48,7 +48,7 @@ main {
       font-size: 34px;
       font-weight: 400;
       padding: 34px;
-      color: #607D8B;
+      color: $grey;
     }
     
     .button {

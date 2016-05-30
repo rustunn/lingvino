@@ -1,0 +1,18 @@
+@import 'colors';
+
+$fontFamily: "Roboto", "Helvetica", "Arial", sans-serif;
+
+@mixin text {
+  font-family: $fontFamily;
+  font-size: 16px;
+  color: $grey;
+  font-weight: 400;
+}
+
+@mixin header {
+  font-family: $fontFamily;
+  letter-spacing: .02em;
+  font-weight: 400;
+  font-size: 20px;
+  color: white;
+}

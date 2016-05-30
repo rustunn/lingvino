@@ -153,7 +153,7 @@ export default {
     font-size: 20px;
     font-weight: 400;
     padding: 34px;
-    color: #607D8B;
+    color: $grey;
   }
   
   .player {
@@ -168,7 +168,7 @@ export default {
       height: 20px;
       line-heihgt: 20px;
       font-size: 0;
-      color: #607D8B;
+      color: $grey;
       display: flex;
       flex-direction: row;
       justify-content: space-between;
@@ -261,7 +261,7 @@ $duration: 1.4s;
   stroke-dasharray: $offset;
   stroke-dashoffset: 0;
   transform-origin: center;
-  stroke: #607D8B;
+  stroke: $grey;
   animation:
     dash $duration ease-in-out infinite;
 }

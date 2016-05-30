@@ -31,7 +31,7 @@ export default {
     font-size: 20px;
     font-weight: 400;
     padding: 34px;
-    color: #607D8B;
+    color: $grey;
   }
   
   .button {
