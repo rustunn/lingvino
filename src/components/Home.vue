@@ -36,7 +36,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../mixins/card';
 @import '../mixins/colors';
 
 main {
@@ -45,16 +44,11 @@ main {
   text-align: center;
   box-sizing: border-box;
   
-  .card {
-    @include card;
-    align-items: center;
-  
-    h1 {
-      font-size: 34px;
-      font-weight: 400;
-      padding: 34px;
-      color: $grey;
-    }
+  h1 {
+    font-size: 34px;
+    font-weight: 400;
+    padding: 34px;
+    color: $grey;
   }
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="audio-card">
+  <div class="card audio-card">
     <h3 class="text">
       <slot></slot>
     </h3>
@@ -162,14 +162,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../mixins/card';
 @import '../../mixins/colors';
 @import '../../mixins/input';
 
 .audio-card {
-  @include card;
-  align-items: center;
-
   h3 {
     font-size: 20px;
     font-weight: 400;

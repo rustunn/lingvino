@@ -1,5 +1,5 @@
 <template>
-  <div class="ranking-card">
+  <div class="card ranking-card">
     <div class="options-container">
       <radio v-for="option in options" :checked="option === checkedOption" :value="option.value" v-on:checked="optionChecked">{{option.label}}</radio>
     </div>
@@ -64,12 +64,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../mixins/card';
-
 .ranking-card {
-  @include card;
-  align-items: center;
-  
   .options-container {
     margin: 6px 0;
   }

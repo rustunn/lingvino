@@ -49,6 +49,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../mixins/common';
+
 * {
   margin: 0;
   padding: 0;

@@ -49,13 +49,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../mixins/card';
 @import '../mixins/input';
 
 .card {
-  @include card;
-  align-items: center;
-  
   input[type="text"], input[type="password"] {
     @include textfeild;
   }

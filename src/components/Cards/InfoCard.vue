@@ -1,5 +1,5 @@
 <template>
-  <div class="info-card">
+  <div class="card info-card">
     <h3 class="text">{{text}}</h3>
     <button text-color="light" :raised="true" :colored="true" @click="clicked">{{button}}</button>
   </div>
@@ -20,13 +20,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../mixins/card';
 @import '../../mixins/colors';
 
 .info-card {
-  @include card;
-  align-items: center;
-
   h3 {
     font-size: 20px;
     font-weight: 400;
