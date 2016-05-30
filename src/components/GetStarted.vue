@@ -1,6 +1,6 @@
 <template>
   <div id="get-strated">
-    <ranking-card></ranking-card>
+    <audio-card src="/static/audio/story1_1.mp3" :controls="true">Lesson Name goes here</audio-card>
   </div>
 </template>
 

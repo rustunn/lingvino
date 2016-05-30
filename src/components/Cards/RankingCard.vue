@@ -64,7 +64,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../mixins/buttons';
 @import '../../mixins/card';
 
 .ranking-card {

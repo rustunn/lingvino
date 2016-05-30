@@ -1,5 +1,6 @@
 <template>
   <div :class="styles">
+    <img v-if="icon" :src="iconSrc">
     <slot></slot>
   </div>
 </template>
@@ -22,6 +23,15 @@ export default {
       },
       default: 'dark',
     },
+    icon: {
+      type: String,
+    },
+    type: {
+      type: String,
+      validator(value) {
+        return value === 'icon';
+      },
+    },
   },
   computed: {
     styles() {
@@ -30,7 +40,28 @@ export default {
         light: this.textColor === 'light',
         dark: this.textColor === 'dark',
         raised: this.raised,
+        icon: this.type === 'icon',
       };
+    },
+    iconSrc() {
+      let imgName;
+      switch (this.icon) {
+        case 'play':
+          imgName = 'ic_play_arrow_black_24px.svg';
+          break;
+        case 'pause':
+          imgName = 'ic_pause_black_24px.svg';
+          break;
+        case 'replay':
+          imgName = 'ic_replay_black_24px.svg';
+          break;
+        case 'menu':
+          imgName = 'ic_menu_white_24px.svg';
+          break;
+        default:
+          break;
+      }
+      return `/static/icons/${imgName}`;
     },
   },
 };
@@ -45,7 +76,10 @@ div {
   height: 36px;
   min-width: 64px;
   padding: 0 16px;
-  display: inline-block;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
   font-family: "Roboto","Helvetica","Arial",sans-serif;
   font-size: 14px;
   font-weight: 500;
@@ -78,6 +112,17 @@ div {
     color: white;
   }
   
+  &.icon {
+    width: 48px;
+    min-width: 48px;
+    height: 48px;
+    padding: 0;
+    
+    img {
+      margin-right: 0px;
+    }
+  }
+  
   &:hover {
     background-color: rgba(158,158,158,.2);
   }
@@ -88,6 +133,12 @@ div {
   
   &:focus {
     background-color: rgba(0,0,0,.12);
+  }
+  
+  img {
+    width: 24px;
+    height: 24px;
+    margin-right: 12px;
   }
 }
 </style>

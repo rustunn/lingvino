@@ -49,8 +49,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../mixins/buttons';
-
 * {
   margin: 0;
   padding: 0;
@@ -64,6 +62,7 @@ html, body {
 }
 
 .container {
+  position: relative;
   min-height: 100%;
   margin-bottom: -2rem;
   padding-bottom: 2rem;

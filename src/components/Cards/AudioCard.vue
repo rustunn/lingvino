@@ -1,13 +1,13 @@
 <template>
   <div class="audio-card">
-    <h3 class="text">{{text}}</h3>
+    <h3 class="text">
+      <slot></slot>
+    </h3>
     <div class="player">
       <div class="timing">
         <span class="start-time">{{ currentTime | toTime }}</span>
-        <div v-if="buffering" class="buffer">
-          <svg class="spinner" width="16px" height="16px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
-            <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
-          </svg>
+        <div class="buffer">
+          <spinner v-if="buffering" :size="16" :colored="false"></spinner>
           <span class="buffering">Buffering...</span>
         </div>
         <span class="end-time">{{ duration | toTime }}</span>
@@ -17,18 +17,26 @@
         <div class="bar" :style="barWidth"></div>
         <input v-if="controls" type="range" class="slider" min="0" :max="duration" v-model="currentTime" @touchStart="sliderTouched" @touchEnd="sliderReleased">
       </div>
-      <div v-if="controls" class="button" :class="{ 'replay': (!playing && currentTime === duration), 'play': (!playing && currentTime !== duration), 'pause': playing }" @click="buttonClicked"></div>
+      <button v-if="controls" type="icon" :icon="buttonIcon" @click="buttonClicked"></button>
       <audio :src="src"></audio>
     </div>
   </div>
 </template>
 
 <script>
+import Button from '../Common/Button';
+import Spinner from '../Common/Spinner';
+
 export default {
   props: {
-    text: String,
-    src: String,
-    controls: Boolean,
+    src: {
+      type: String,
+      required: true,
+    },
+    controls: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -58,6 +66,16 @@ export default {
       return {
         width: `${this.buffered / this.duration * 100}%`,
       };
+    },
+    buttonIcon() {
+      let icon;
+      if (this.playing) {
+        icon = 'pause';
+      } else {
+        if (this.currentTime === this.duration) icon = 'replay';
+        else icon = 'play';
+      }
+      return icon;
     },
   },
   methods: {
@@ -136,11 +154,14 @@ export default {
       return text;
     },
   },
+  components: {
+    Button,
+    Spinner,
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-@import '../../mixins/buttons';
 @import '../../mixins/card';
 @import '../../mixins/colors';
 @import '../../mixins/input';
@@ -219,70 +240,6 @@ export default {
         background: transparent;
       }
     }
-    
-    .button {
-      position: relative;
-      width: 48px;
-      height: 48px;
-      cursor: pointer;
-      background-size: 24px 24px;
-      background-position: 12px 12px;
-      background-repeat: no-repeat;
-      
-      &.play {
-        background-image: url('/static/icons/ic_play_arrow_black_24px.svg');
-      }
-      
-      &.pause {
-        background-image: url('/static/icons/ic_pause_black_24px.svg');
-      }
-      
-      &.replay {
-        background-image: url('/static/icons/ic_replay_black_24px.svg');
-      }
-    }
   }
-}
-
-$offset: 187;
-$duration: 1.4s;
-
-.spinner {
-  margin-right: 6px;
-  animation: rotator $duration linear infinite;
-}
-
-@keyframes rotator {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(270deg); }
-}
-
-.path {
-  stroke-dasharray: $offset;
-  stroke-dashoffset: 0;
-  transform-origin: center;
-  stroke: $grey;
-  animation:
-    dash $duration ease-in-out infinite;
-}
-
-@keyframes colors {
-	0% { stroke: #4285F4; }
-	25% { stroke: #DE3E35; }
-	50% { stroke: #F7C223; }
-	75% { stroke: #1B9A59; }
-  100% { stroke: #4285F4; }
-}
-
-@keyframes dash {
- 0% { stroke-dashoffset: $offset; }
- 50% {
-   stroke-dashoffset: $offset/4;
-   transform:rotate(135deg);
- }
- 100% {
-   stroke-dashoffset: $offset;
-   transform:rotate(450deg);
- }
 }
 </style>

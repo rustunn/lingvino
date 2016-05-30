@@ -1,7 +1,7 @@
 <template>
   <header>
     <div class="title">
-      <div v-if="showMenu"  class="menu"></div>
+      <button v-if="showMenu" icon="menu" type="icon"></button>
       <span v-link="{ path: '/' }" class="name">Lingvino</span>
     </div>
     <button v-if="isSignedIn" @click="signOut" text-color="light" :colored="false" :raised="false">Sign Out</button>
