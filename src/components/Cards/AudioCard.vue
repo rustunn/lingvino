@@ -6,8 +6,8 @@
     <div class="player">
       <div class="timing">
         <span class="start-time">{{ currentTime | toTime }}</span>
-        <div class="buffer">
-          <spinner v-if="buffering" :size="16" :colored="false"></spinner>
+        <div v-if="buffering" class="buffer">
+          <spinner :size="16" :colored="false"></spinner>
           <span class="buffering">Buffering...</span>
         </div>
         <span class="end-time">{{ duration | toTime }}</span>

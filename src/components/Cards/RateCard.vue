@@ -53,7 +53,7 @@ export default {
       this.checkedValue = value;
     },
     buttonClicked() {
-      this.$emit('clicked', value);
+      this.$emit('rated', this.checkedValue);
     },
   },
   components: {
