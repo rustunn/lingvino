@@ -14,6 +14,7 @@ import TextField from '../Common/TextField';
 
 import {
   signedIn,
+  setUserData,
 } from '../../vuex/actions';
 
 export default {
@@ -40,6 +41,7 @@ export default {
         firebase.database().ref(`users/${user.uid}`).set({
           levels: this.levels,
         });
+        this.setUserData({ levels: this.levels });
         this.$router.go('/learn');
       })
       .catch((error) => {
@@ -50,6 +52,7 @@ export default {
   vuex: {
     actions: {
       signedIn,
+      setUserData,
     },
   },
   components: {

@@ -27,6 +27,7 @@ const mutations = {
     state.user.isSignedIn = false;
     delete state.user.uid;
     delete state.user.email;
+    delete state.userData;
   },
   [SET_USER_DATA](st, data) {
     state.userData = data;
