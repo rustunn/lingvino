@@ -1,7 +1,7 @@
 <template>
   <div class="input">
-    <input :type="type" v-model="data" @focus="focus" @blur="unfocus">
-    <div class="label" v-if="placeholder !== ''" class="placeholder" :class="{ 'raised': focused || data }">{{placeholder}}</div>
+    <input :type="type" v-model="value" @focus="focus" @blur="unfocus">
+    <div class="label" v-if="placeholder !== ''" class="placeholder" :class="{ 'raised': focused || value }">{{placeholder}}</div>
     <div class="line" :class="{ 'shown': focused }"></div>
   </div>
 </template>
@@ -11,10 +11,13 @@ export default {
   data() {
     return {
       focused: false,
-      data: undefined,
     };
   },
   props: {
+    value: {
+      required: true,
+      twoWay: true,
+    },
     placeholder: {
       type: String,
       default: '',

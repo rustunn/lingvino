@@ -1,7 +1,7 @@
 <template>
   <div class="card">
-    <text-field type="text" placeholder="Email"></text-field>
-    <text-field type="password" placeholder="Password"></text-field>
+    <text-field type="text" placeholder="Email" :value.sync="email"></text-field>
+    <text-field type="password" placeholder="Password" :value.sync="password"></text-field>
     <button text-color="light" :raised="true" :colored="true" @click="signin">Sign In</button>
   </div>
 </template>
