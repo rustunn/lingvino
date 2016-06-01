@@ -12,42 +12,120 @@ import AudioCard from './Cards/AudioCard';
 import RateCard from './Cards/RateCard';
 
 import {
-  steps,
-  currentStep,
-  level,
-  stories,
-} from '../vuex/modules/GetStarted/getters';
-
-import {
-  nextStep,
-  levelDown,
-  levelUp,
-  storyUsed,
-} from '../vuex/modules/GetStarted/actions';
+  isSignedIn,
+} from '../vuex/getters';
 
 export default {
   data() {
     return {
+      steps: [
+        {
+          component: 'info-card',
+          text: "Before we begin, let's find out your level of english",
+          button: 'Begin',
+          completed: false,
+        },
+        {
+          component: 'info-card',
+          text: 'Listen to the short story and rank how well you understood it',
+          button: 'Start Listening',
+          completed: false,
+        },
+        {
+          component: 'audio-card',
+          completed: false,
+        },
+        {
+          component: 'rate-card',
+          completed: false,
+        },
+        {
+          component: 'audio-card',
+          completed: false,
+        },
+        {
+          component: 'rate-card',
+          completed: false,
+        },
+        {
+          component: 'audio-card',
+          completed: false,
+        },
+        {
+          component: 'rate-card',
+          completed: false,
+        },
+        {
+          component: 'info-card',
+          text: 'Congrats! We successfully identified your level of English!',
+          button: 'Next',
+          completed: false,
+        },
+      ],
+      stories: [
+        [
+          {
+            src: '/static/audio/story1_1.mp3',
+            used: false,
+          },
+          {
+            src: '/static/audio/story1_2.mp3',
+            used: false,
+          },
+        ],
+        [
+          {
+            src: '/static/audio/story2_1.mp3',
+            used: false,
+          },
+          {
+            src: '/static/audio/story2_2.mp3',
+            used: false,
+          },
+          {
+            src: '/static/audio/story2_3.mp3',
+            used: false,
+          },
+        ],
+        [
+          {
+            src: '/static/audio/story3_1.mp3',
+            used: false,
+          },
+          {
+            src: '/static/audio/story3_2.mp3',
+            used: false,
+          },
+        ],
+      ],
+      currentStep: 0,
+      level: 1,
+      points: 0,
+      pointsRange: {
+        '0to1': 18,
+        '1to2': 32,
+      },
     };
   },
   computed: {
-    requestedStep() {
-      return parseInt(this.$route.params.step, 10) - 1;
-    },
     step() {
-      return this.steps[this.requestedStep];
+      return this.steps[this.currentStep];
     },
     audioSrc() {
-      let found = false;
-      let num;
-      while (found !== true) {
-        num = Math.floor(Math.random() * this.stories[this.level].length);
-        if (this.stories[this.level][num].used === false) {
-          this.storyUsed(this.level, num);
-          found = true;
+      let src = '';
+      if (this.step.component === 'audio-card') {
+        let found = false;
+        let num;
+        while (found !== true) {
+          num = Math.floor(Math.random() * this.stories[this.level].length);
+          if (this.stories[this.level][num].used === false) {
+            this.storyUsed(this.level, num);
+            found = true;
+          }
         }
+        src = this.stories[this.level][num].src;
       }
-      return this.stories[this.level][num].src;
+      return src;
     },
   },
   methods: {
@@ -58,36 +136,43 @@ export default {
       this.countinue();
     },
     rated(value) {
+      this.addPoints(value * (this.level + 1));
       if (value < 3) this.levelDown();
       else if (value > 3) this.levelUp();
       this.countinue();
     },
     countinue() {
       this.nextStep();
-      this.$route.router.go({ name: 'get-started', params: { step: this.currentStep + 1 } });
     },
-  },
-  route: {
-    activate(transition) {
-      if (this.requestedStep !== this.currentStep) {
-        transition.redirect({ name: 'get-started', params: { step: this.currentStep + 1 } });
-      } else {
-        transition.next();
-      }
+    nextStep() {
+      this.steps[this.currentStep].completed = true;
+      this.currentStep++;
+    },
+    levelUp() {
+      if (this.level < 2) this.level++;
+    },
+    levelDown() {
+      if (this.level > 0) this.level--;
+    },
+    storyUsed(level, story) {
+      this.stories[level][story].used = true;
+    },
+    addPoints(points) {
+      this.points += points;
     },
   },
   vuex: {
     getters: {
-      steps,
-      currentStep,
-      level,
-      stories,
+      isSignedIn,
     },
-    actions: {
-      nextStep,
-      levelDown,
-      levelUp,
-      storyUsed,
+  },
+  route: {
+    activate(transition) {
+      if (this.isSignedIn) {
+        transition.redirect('/learn');
+      } else {
+        transition.next();
+      }
     },
   },
   components: {

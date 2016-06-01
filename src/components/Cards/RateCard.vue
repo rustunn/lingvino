@@ -41,10 +41,7 @@ export default {
   },
   computed: {
     checkedOption() {
-      /* eslint-disable */
-      const items = this.options.filter((option) => {
-        return option.value === this.checkedValue;
-      });
+      const items = this.options.filter(option => option.value === this.checkedValue);
       return items[0];
     },
   },

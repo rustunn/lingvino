@@ -2,7 +2,7 @@
   <main>
     <div class="card">
       <h1>Spoken English for Everyone</h1>
-      <button v-link:="{ name: 'get-started', params: { step: 1 } }" :colored="true" text-color="light" :raised="true">Get started</button>
+      <button v-link:="{ path: 'get-started'}" :colored="true" text-color="light" :raised="true">Get started</button>
     </div>
   </main>
 </template>

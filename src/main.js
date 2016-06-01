@@ -26,15 +26,12 @@ router.map({
   '/learn': {
     component: Learn,
   },
-  '/get-started/:step': {
-    name: 'get-started',
+  '/get-started': {
     component: GetStarted,
   },
 });
 
 router.redirect({
-  '/get-started': '/get-started/1',
-
   // redirect any not-found route to home
   '*': '/',
 });

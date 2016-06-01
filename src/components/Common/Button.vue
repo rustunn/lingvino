@@ -123,9 +123,9 @@ div {
     }
   }
   
-  &:hover {
-    background-color: rgba(158,158,158,.2);
-  }
+  // &:hover {
+  //   background-color: rgba(158,158,158,.2);
+  // }
   
   &:active {
     background-color: rgba(158,158,158,.4);

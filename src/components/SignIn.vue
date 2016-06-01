@@ -1,7 +1,7 @@
 <template>
   <div class="card">
-    <input v-model="email" type="text" placeholder="Email">
-    <input v-model="password" type="password" placeholder="Password">
+    <text-field type="text" placeholder="Email"></text-field>
+    <text-field type="password" placeholder="Password"></text-field>
     <button text-color="light" :raised="true" :colored="true" @click="signin">Sign In</button>
   </div>
 </template>
@@ -10,6 +10,7 @@
 import firebase from 'firebase';
 
 import Button from './Common/Button';
+import TextField from './Common/TextField';
 
 import {
   signedIn,
@@ -44,16 +45,7 @@ export default {
   },
   components: {
     Button,
+    TextField,
   },
 };
 </script>
-
-<style lang="scss" scoped>
-@import '../mixins/input';
-
-.card {
-  input[type="text"], input[type="password"] {
-    @include textfeild;
-  }
-}
-</style>
