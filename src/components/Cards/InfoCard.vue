@@ -1,6 +1,6 @@
 <template>
   <div class="card info-card">
-    <h3 class="text">
+    <h3>
       <slot></slot>
     </h3>
     <button text-color="light" :raised="true" :colored="true" @click="clicked">{{button}}</button>
@@ -30,13 +30,13 @@ export default {
 
 <style lang="scss" scoped>
 @import '../../mixins/colors';
+@import '../../mixins/typography';
 
 .info-card {
   h3 {
-    font-size: 20px;
-    font-weight: 400;
+    @include title;
+    
     padding: 34px;
-    color: $grey;
   }
 }
 </style>

@@ -36,4 +36,4 @@ router.redirect({
   '*': '/',
 });
 
-router.start(App, '#app');
+router.start(App, 'app');

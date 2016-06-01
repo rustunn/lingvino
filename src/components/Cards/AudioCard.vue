@@ -1,16 +1,16 @@
 <template>
   <div class="card audio-card">
-    <h3 class="text">
+    <h3 class="title">
       <slot></slot>
     </h3>
     <div class="player">
       <div class="timing">
-        <span class="start-time">{{ currentTime | toTime }}</span>
+        <span class="start-time text">{{ currentTime | toTime }}</span>
         <div v-if="buffering" class="buffer">
           <spinner :size="16" :colored="false"></spinner>
-          <span class="buffering">Buffering...</span>
+          <span class="buffering text">Buffering...</span>
         </div>
-        <span class="end-time">{{ duration | toTime }}</span>
+        <span class="end-time text">{{ duration | toTime }}</span>
       </div>
       <div class="progress-bar">
         <div class="bar" :style="bufferWidth"></div>
@@ -164,13 +164,11 @@ export default {
 <style lang="scss" scoped>
 @import '../../mixins/colors';
 @import '../../mixins/input';
+@import '../../mixins/typography';
 
 .audio-card {
   h3 {
-    font-size: 20px;
-    font-weight: 400;
-    padding: 34px;
-    color: $grey;
+    @include title;
   }
   
   .player {
@@ -198,8 +196,9 @@ export default {
       }
       
       span {
+        @include text;
+        
         text-align: center;
-        font-size: 16px;
         
         &:first-child {
           text-align: left;

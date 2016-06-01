@@ -80,7 +80,6 @@ export default {
   
   span {
     @include text;
-    
     display: inline-block;
     margin: 0 6px;
   }

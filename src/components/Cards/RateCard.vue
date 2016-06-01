@@ -16,24 +16,24 @@ export default {
     return {
       options: [
         {
-          label: "Didn't understand anything",
-          value: 1,
-        },
-        {
-          label: 'Understood some words',
-          value: 2,
-        },
-        {
-          label: 'Understood general idea',
-          value: 3,
+          label: 'Understood everythihng',
+          value: 5,
         },
         {
           label: 'Understood everythihng exept some words',
           value: 4,
         },
         {
-          label: 'Understood everythihng',
-          value: 5,
+          label: 'Understood general idea',
+          value: 3,
+        },
+        {
+          label: 'Understood some words',
+          value: 2,
+        },
+        {
+          label: "Didn't understand anything",
+          value: 1,
         },
       ],
       checkedValue: 3,
