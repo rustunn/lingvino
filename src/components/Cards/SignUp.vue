@@ -2,36 +2,43 @@
   <div class="card">
     <text-field type="email" placeholder="Email" :value.sync="email"></text-field>
     <text-field type="password" placeholder="Password" :value.sync="password"></text-field>
-    <button text-color="light" :raised="true" :colored="true" @click="signin">Sign In</button>
+    <button text-color="light" :raised="true" :colored="true" @click="signup">Sign Up</button>
   </div>
 </template>
 
 <script>
 import firebase from 'firebase';
 
-import Button from './Common/Button';
-import TextField from './Common/TextField';
+import Button from '../Common/Button';
+import TextField from '../Common/TextField';
 
 import {
   signedIn,
-  setUserData,
-} from '../vuex/actions';
+} from '../../vuex/actions';
 
 export default {
+  props: {
+    levels: {
+      type: Number,
+      required: true,
+      validator(value) {
+        return value >= 3 && value <= 5;
+      },
+    },
+  },
   data() {
     return {
-      email: '',
-      password: '',
+      email: undefined,
+      password: undefined,
     };
   },
   methods: {
-    signin() {
-      firebase.auth().signInWithEmailAndPassword(this.email, this.password)
+    signup() {
+      firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
       .then((user) => {
         this.signedIn(user);
-        firebase.database().ref(`users/${user.uid}`).once('value')
-        .then((levels) => {
-          this.setUserData(levels.val());
+        firebase.database().ref(`users/${user.uid}`).set({
+          levels: this.levels,
         });
         this.$router.go('/learn');
       })
@@ -43,7 +50,6 @@ export default {
   vuex: {
     actions: {
       signedIn,
-      setUserData,
     },
   },
   components: {

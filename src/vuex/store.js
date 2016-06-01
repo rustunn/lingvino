@@ -6,12 +6,14 @@ Vue.use(Vuex);
 import {
   SIGNED_IN,
   SIGNED_OUT,
+  SET_USER_DATA,
 } from './mutation-types';
 
 const state = {
   user: {
     isSignedIn: false,
   },
+  userData: undefined,
 };
 
 const mutations = {
@@ -25,6 +27,9 @@ const mutations = {
     state.user.isSignedIn = false;
     delete state.user.uid;
     delete state.user.email;
+  },
+  [SET_USER_DATA](st, data) {
+    state.userData = data;
   },
 };
 

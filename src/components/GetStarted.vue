@@ -3,6 +3,7 @@
     <info-card v-if="step.component === 'info-card'" :button="step.button" v-on:clicked="clicked" transition="step">{{step.text}}</info-card>
     <audio-card v-if="step.component === 'audio-card'" :src="audioSrc" v-on:audio-ended="audioEnded" transition="step">Listen carefully!</audio-card>
     <rate-card v-if="step.component === 'rate-card'" v-on:rated="rated" transition="step"></rate-card>
+    <sign-up v-if="step.component === 'sign-up'" :levels="levelsInCourse" transition="step"></sign-up>
   </div>
 </template>
 
@@ -10,6 +11,7 @@
 import InfoCard from './Cards/InfoCard';
 import AudioCard from './Cards/AudioCard';
 import RateCard from './Cards/RateCard';
+import SignUp from './Cards/SignUp';
 
 import {
   isSignedIn,
@@ -23,43 +25,37 @@ export default {
           component: 'info-card',
           text: "Before we begin, let's find out your level of english",
           button: 'Begin',
-          completed: false,
         },
         {
           component: 'info-card',
           text: 'Listen to the short story and rank how well you understood it',
           button: 'Start Listening',
-          completed: false,
         },
         {
           component: 'audio-card',
-          completed: false,
         },
         {
           component: 'rate-card',
-          completed: false,
         },
         {
           component: 'audio-card',
-          completed: false,
         },
         {
           component: 'rate-card',
-          completed: false,
         },
         {
           component: 'audio-card',
-          completed: false,
         },
         {
           component: 'rate-card',
-          completed: false,
         },
         {
           component: 'info-card',
           text: 'Congrats! We successfully identified your level of English!',
           button: 'Next',
-          completed: false,
+        },
+        {
+          component: 'sign-up',
         },
       ],
       stories: [
@@ -101,10 +97,7 @@ export default {
       currentStep: 0,
       level: 1,
       points: 0,
-      pointsRange: {
-        '0to1': 18,
-        '1to2': 32,
-      },
+      pointsRange: [18, 32],
     };
   },
   computed: {
@@ -127,6 +120,12 @@ export default {
       }
       return src;
     },
+    levelsInCourse() {
+      let levels = 4;
+      if (this.points > this.pointsRange[1]) levels = 3;
+      else if (this.points < this.pointsRange[0]) levels = 5;
+      return levels;
+    },
   },
   methods: {
     clicked() {
@@ -145,7 +144,6 @@ export default {
       this.nextStep();
     },
     nextStep() {
-      this.steps[this.currentStep].completed = true;
       this.currentStep++;
     },
     levelUp() {
@@ -179,6 +177,7 @@ export default {
     InfoCard,
     AudioCard,
     RateCard,
+    SignUp,
   },
 };
 </script>
