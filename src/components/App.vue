@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <header-el></header-el>
     <router-view></router-view>
   </div>
   <footer></footer>
@@ -8,7 +7,6 @@
 
 <script>
 import firebase from 'firebase';
-import Header from './Header';
 
 import store from '../vuex/store';
 
@@ -40,9 +38,6 @@ export default {
       signedIn,
       signedOut,
     },
-  },
-  components: {
-    'header-el': Header,
   },
   store,
 };

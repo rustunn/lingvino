@@ -1,4 +1,7 @@
 <template>
+  <header-el title="Lingvino">
+    <button slot="right" v-link="{ path: '/signin' }" text-color="light" :colored="false" :raised="false">Sign In</button>
+  </header-el>
   <main>
     <div class="card">
       <h1>Spoken English for Everyone</h1>
@@ -8,6 +11,7 @@
 </template>
 
 <script>
+import HeaderEl from './Common/Header';
 import Button from './Common/Button';
 
 import {
@@ -31,6 +35,7 @@ export default {
   },
   components: {
     Button,
+    HeaderEl,
   },
 };
 </script>

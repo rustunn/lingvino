@@ -91,16 +91,4 @@ header {
   line-height: 1;
   box-sizing: border-box;
 }
-
-.menu {
-  display: block;
-  position: relative;
-  width: 48px;
-  height: 48px;
-  cursor: pointer;
-  background-image: url('/static/icons/ic_menu_white_24px.svg');
-  background-size: 24px 24px;
-  background-position: 12px 12px;
-  background-repeat: no-repeat;
-}
 </style>

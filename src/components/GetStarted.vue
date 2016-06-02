@@ -1,4 +1,7 @@
 <template>
+  <header-el title="Get Started">
+    <button slot="left" icon="back" type="icon" v-link="{ path: '/' }"></button>
+  </header-el>
   <div id="get-strated">    
     <info-card v-if="step.component === 'info-card'" :button="step.button" v-on:clicked="clicked" transition="step">{{step.text}}</info-card>
     <audio-card v-if="step.component === 'audio-card'" :src="audioSrc" v-on:audio-ended="audioEnded" transition="step">Listen carefully!</audio-card>
@@ -12,6 +15,9 @@ import InfoCard from './Cards/InfoCard';
 import AudioCard from './Cards/AudioCard';
 import RateCard from './Cards/RateCard';
 import SignUp from './Cards/SignUp';
+
+import HeaderEl from './Common/Header';
+import Button from './Common/Button';
 
 import {
   isSignedIn,
@@ -178,6 +184,8 @@ export default {
     AudioCard,
     RateCard,
     SignUp,
+    HeaderEl,
+    Button,
   },
 };
 </script>

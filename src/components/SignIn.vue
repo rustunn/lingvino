@@ -1,4 +1,7 @@
 <template>
+  <header-el title="Sign In">
+    <button slot="left" icon="back" type="icon" v-link="{ path: '/' }"></button>
+  </header-el>
   <div class="card">
     <text-field type="email" placeholder="Email" :value.sync="email"></text-field>
     <text-field type="password" placeholder="Password" :value.sync="password"></text-field>
@@ -10,6 +13,7 @@
 import firebase from 'firebase';
 
 import Button from './Common/Button';
+import HeaderEl from './Common/Header';
 import TextField from './Common/TextField';
 
 import {
@@ -49,6 +53,7 @@ export default {
   components: {
     Button,
     TextField,
+    HeaderEl,
   },
 };
 </script>

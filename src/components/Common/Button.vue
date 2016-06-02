@@ -25,6 +25,21 @@ export default {
     },
     icon: {
       type: String,
+      validator(value) {
+        let val = false;
+        switch (value) {
+          case 'play':
+          case 'pause':
+          case 'replay':
+          case 'menu':
+          case 'back':
+            val = true;
+            break;
+          default:
+            break;
+        }
+        return val;
+      },
     },
     type: {
       type: String,
@@ -57,6 +72,9 @@ export default {
           break;
         case 'menu':
           imgName = 'ic_menu_white_24px.svg';
+          break;
+        case 'back':
+          imgName = 'ic_arrow_back_white_24px.svg';
           break;
         default:
           break;
