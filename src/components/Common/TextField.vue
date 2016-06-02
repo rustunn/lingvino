@@ -1,7 +1,7 @@
 <template>
   <div class="input">
-    <input :type="type" v-model="value" @focus="focus" @blur="unfocus">
     <div class="label" v-if="placeholder !== ''" class="placeholder" :class="{ 'raised': focused || value }">{{placeholder}}</div>
+    <input :type="type" v-model="value" @focus="focus" @blur="unfocus">
     <div class="line" :class="{ 'shown': focused }"></div>
   </div>
 </template>
@@ -47,6 +47,9 @@ export default {
 .input {
   position: relative;
   display: inline-block;
+  min-width: 240px;
+  width: 100%;
+  max-width: 320px;
   
   input {
     letter-spacing: normal;
@@ -64,23 +67,25 @@ export default {
     border-bottom: 2px solid rgba(0,0,0,.12);
     font-size: 16px;
     font-family: "Helvetica","Arial",sans-serif;
-    margin: 20px;
+    margin: 20px 0;
     padding: 4px;
-    width: calc(100% - 40px);
+    width: calc(100%);
     background: 0 0;
     text-align: left;
     color: inherit;
+    z-index: 1;
   }
   
   .label {
     position: absolute;
     top: 24px;
-    left: 24px;
+    left: 4px;
     transition: all 0.3s ease-in-out 0s;
     color: $grey;
     font-size: 16px;
     font-family: "Helvetica","Arial",sans-serif;
     transform-origin: 0% 50%;
+    z-index: -1;
     
     &.raised {
       transform: translateY(-20px) scale(0.75);
@@ -90,10 +95,10 @@ export default {
   
   .line {
     position: absolute;
-    left: 20px;
+    left: 0px;
     top: 46px;
     height: 2px;
-    width: calc(100% - 40px);
+    width: calc(100%);
     background: $mainColor;
     transform: scale(0, 1);
     transition: all 0.3s ease-in-out 0s;
