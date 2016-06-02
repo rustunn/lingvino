@@ -1,13 +1,15 @@
 <template>
-  <header-el title="Lingvino">
-    <button slot="right" v-link="{ path: '/signin' }" text-color="light" :colored="false" :raised="false">Sign In</button>
-  </header-el>
-  <main>
-    <div class="card">
-      <h1>Spoken English for Everyone</h1>
-      <button v-link:="{ path: 'get-started'}" :colored="true" text-color="light" :raised="true">Get started</button>
-    </div>
-  </main>
+  <div class="page">
+    <header-el title="Lingvino">
+      <button slot="right" v-link="{ path: '/signin' }" text-color="light" :colored="false" :raised="false">Sign In</button>
+    </header-el>
+    <main>
+      <div class="card">
+        <h1>Spoken English for Everyone</h1>
+        <button v-link:="{ path: 'get-started'}" :colored="true" text-color="light" :raised="true">Get started</button>
+      </div>
+    </main>
+  </div>
 </template>
 
 <script>

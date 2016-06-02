@@ -1,11 +1,13 @@
 <template>
-  <header-el title="Sign In">
-    <button slot="left" icon="back" type="icon" v-link="{ path: '/' }"></button>
-  </header-el>
-  <div class="card">
-    <text-field type="email" placeholder="Email" :value.sync="email"></text-field>
-    <text-field type="password" placeholder="Password" :value.sync="password"></text-field>
-    <button text-color="light" :raised="true" :colored="true" @click="signin">Sign In</button>
+  <div class="page">
+    <header-el title="Sign In">
+      <button slot="left" icon="back" type="icon" v-link="{ path: '/' }"></button>
+    </header-el>
+    <div class="card">
+      <text-field type="email" placeholder="Email" :value.sync="email"></text-field>
+      <text-field type="password" placeholder="Password" :value.sync="password"></text-field>
+      <button text-color="light" :raised="true" :colored="true" @click="signin">Sign In</button>
+    </div>
   </div>
 </template>
 

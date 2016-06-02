@@ -1,10 +1,9 @@
 <template>
-  <header-el title="My Lessons">
-    <button slot="left" icon="menu" type="icon"></button>
-    <button slot="right" @click="signOut" text-color="light" :colored="false" :raised="false">Sign Out</button>
-  </header-el>
-  <div id="learn">
-    
+  <div class="page">
+    <header-el title="My Lessons">
+      <button slot="left" icon="menu" type="icon"></button>
+      <button slot="right" @click="signOut" text-color="light" :colored="false" :raised="false">Sign Out</button>
+    </header-el>
   </div>
 </template>
 

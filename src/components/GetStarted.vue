@@ -1,8 +1,8 @@
 <template>
-  <header-el title="Get Started">
-    <button slot="left" icon="back" type="icon" v-link="{ path: '/' }"></button>
-  </header-el>
-  <div id="get-strated">    
+  <div class="page">
+    <header-el title="Get Started">
+      <button slot="left" icon="back" type="icon" v-link="{ path: '/' }"></button>
+    </header-el>   
     <info-card v-if="step.component === 'info-card'" :button="step.button" v-on:clicked="clicked" transition="step">{{step.text}}</info-card>
     <audio-card v-if="step.component === 'audio-card'" :src="audioSrc" v-on:audio-ended="audioEnded" transition="step">Listen carefully!</audio-card>
     <rate-card v-if="step.component === 'rate-card'" v-on:rated="rated" transition="step"></rate-card>

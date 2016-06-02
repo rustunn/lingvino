@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <router-view></router-view>
+    <router-view transition="view"></router-view>
   </div>
   <footer></footer>
 </template>
@@ -73,5 +73,21 @@ footer {
   background: #282828;
   height: 2rem;
   background: #424242;
+}
+
+.view-transition {
+  opacity: 1;
+  transition: all 0.3s ease-in-out 0s;
+}
+
+.view-enter, .view-leave {
+  opacity: 0;
+}
+
+.page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
 }
 </style>
