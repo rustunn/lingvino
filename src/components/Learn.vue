@@ -1,9 +1,10 @@
 <template>
   <div class="page">
     <header-el title="My Lessons">
-      <button slot="left" icon="menu" type="icon"></button>
+      <button slot="left" icon="menu" type="icon" @click="toggleDrawer"></button>
       <button slot="right" @click="signOut" text-color="light" :colored="false" :raised="false">Sign Out</button>
     </header-el>
+    <drawer v-if="drawer" :list="" :first="" :opened="drawer"></drawer>
   </div>
 </template>
 
@@ -12,6 +13,7 @@ import firebase from 'firebase';
 
 import HeaderEl from './Common/Header';
 import Button from './Common/Button';
+import Drawer from './Common/Drawer';
 
 import {
   isSignedIn,
@@ -22,6 +24,11 @@ import {
 } from '../vuex/actions';
 
 export default {
+  data() {
+    return {
+      drawer: false,
+    };
+  },
   methods: {
     signOut() {
       firebase.auth().signOut()
@@ -31,6 +38,9 @@ export default {
       }, (error) => {
         console.log(error);
       });
+    },
+    toggleDrawer() {
+      this.drawer = !this.drawer;
     },
   },
   route: {
@@ -53,6 +63,7 @@ export default {
   components: {
     HeaderEl,
     Button,
+    Drawer,
   },
 };
 </script>
