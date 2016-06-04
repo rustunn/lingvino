@@ -1,6 +1,6 @@
 <template>
   <div v-if="opened" transition="open" class="drawer">
-
+    <slot></slot>
   </div>
 </template>
 
