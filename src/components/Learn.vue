@@ -4,7 +4,8 @@
       <button slot="left" icon="menu" type="icon" @click="toggleDrawer"></button>
       <button slot="right" @click="signOut" text-color="light" :colored="false" :raised="false">Sign Out</button>
     </header-el>
-    <drawer v-if="drawer" :list="" :first="" :opened="drawer"></drawer>
+    <div class="dim" v-if="drawer" transition="dim" @click="toggleDrawer"></div>
+    <drawer v-if="drawer" :list="" :first="" :opened.sync="drawer"></drawer>
   </div>
 </template>
 
@@ -68,5 +69,20 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
+.page {
+  .dim.dim-transition {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);;
+    transition: background 0.3s ease-in-out 0s;
+    
+    &.dim-enter, &.dim-leave {
+      background: rgba(0, 0, 0, 0);
+    }
+  }
+}
 </style>
