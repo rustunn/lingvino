@@ -33,6 +33,8 @@ export default {
           case 'replay':
           case 'menu':
           case 'back':
+          case 'next':
+          case 'previous':
             val = true;
             break;
           default:
@@ -75,6 +77,12 @@ export default {
           break;
         case 'back':
           imgName = 'ic_arrow_back_white_24px.svg';
+          break;
+        case 'next':
+          imgName = 'ic_skip_next_black_24px.svg';
+          break;
+        case 'previous':
+          imgName = 'ic_skip_previous_black_24px.svg';
           break;
         default:
           break;

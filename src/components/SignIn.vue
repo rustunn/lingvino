@@ -18,11 +18,6 @@ import Button from './Common/Button';
 import HeaderEl from './Common/Header';
 import TextField from './Common/TextField';
 
-import {
-  signedIn,
-  setUserData,
-} from '../vuex/actions';
-
 export default {
   data() {
     return {
@@ -32,24 +27,7 @@ export default {
   },
   methods: {
     signin() {
-      firebase.auth().signInWithEmailAndPassword(this.email, this.password)
-      .then((user) => {
-        this.signedIn(user);
-        firebase.database().ref(`users/${user.uid}`).once('value')
-        .then((levels) => {
-          this.setUserData(levels.val());
-        });
-        this.$router.go('/learn');
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    },
-  },
-  vuex: {
-    actions: {
-      signedIn,
-      setUserData,
+      firebase.auth().signInWithEmailAndPassword(this.email, this.password);
     },
   },
   components: {

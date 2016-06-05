@@ -50,8 +50,10 @@ export default {
   min-width: 240px;
   width: 100%;
   max-width: 320px;
+  height: 66px;
   
   input {
+    position: absolute;
     letter-spacing: normal;
     word-spacing: normal;
     text-transform: none;
@@ -73,7 +75,7 @@ export default {
     background: 0 0;
     text-align: left;
     color: inherit;
-    z-index: 1;
+    z-index: 3;
   }
   
   .label {
@@ -85,7 +87,7 @@ export default {
     font-size: 16px;
     font-family: "Helvetica","Arial",sans-serif;
     transform-origin: 0% 50%;
-    z-index: -1;
+    z-index: 0;
     
     &.raised {
       transform: translateY(-20px) scale(0.75);

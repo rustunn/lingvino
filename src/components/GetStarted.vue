@@ -4,7 +4,7 @@
       <button slot="left" icon="back" type="icon" v-link="{ path: '/' }"></button>
     </header-el>   
     <info-card v-if="step.component === 'info-card'" :button="step.button" v-on:clicked="clicked" transition="step">{{step.text}}</info-card>
-    <audio-card v-if="step.component === 'audio-card'" :src="audioSrc" v-on:audio-ended="audioEnded" transition="step">Listen carefully!</audio-card>
+    <audio-card v-if="step.component === 'audio-card'" :src="audioSrc" :autoplay="true" v-on:audio-ended="audioEnded" transition="step">Listen carefully!</audio-card>
     <rate-card v-if="step.component === 'rate-card'" v-on:rated="rated" transition="step"></rate-card>
     <sign-up v-if="step.component === 'sign-up'" :levels="levelsInCourse" transition="step"></sign-up>
   </div>
@@ -18,10 +18,6 @@ import SignUp from './Cards/SignUp';
 
 import HeaderEl from './Common/Header';
 import Button from './Common/Button';
-
-import {
-  isSignedIn,
-} from '../vuex/getters';
 
 export default {
   data() {
@@ -165,15 +161,10 @@ export default {
       this.points += points;
     },
   },
-  vuex: {
-    getters: {
-      isSignedIn,
-    },
-  },
   route: {
     activate(transition) {
       if (this.isSignedIn) {
-        transition.redirect('/learn');
+        transition.redirect('/');
       } else {
         transition.next();
       }

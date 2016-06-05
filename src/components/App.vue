@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <router-view transition="view"></router-view>
+    <router-view :user="user" :user-data="userData"></router-view>
   </div>
   <footer></footer>
 </template>
@@ -8,14 +8,13 @@
 <script>
 import firebase from 'firebase';
 
-import store from '../vuex/store';
-
-import {
-  signedIn,
-  signedOut,
-} from '../vuex/actions';
-
 export default {
+  data() {
+    return {
+      user: null,
+      userData: null,
+    };
+  },
   created() {
     const config = {
       apiKey: 'AIzaSyATjcg0lI0NERYfwrXElrkDl9D2_3eS6jc',
@@ -26,20 +25,20 @@ export default {
 
     firebase.initializeApp(config);
 
-    const user = firebase.auth().currentUser;
-    if (user) {
-      this.signedIn(user);
-    } else {
-      this.signedOut();
-    }
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.user = user;
+        firebase.database().ref(`users/${user.uid}`).on('value', snapshot => {
+          this.userData = snapshot.val();
+        });
+        this.$router.go('/');
+      } else {
+        this.user = null;
+        this.userData = null;
+        this.$router.go('/');
+      }
+    });
   },
-  vuex: {
-    actions: {
-      signedIn,
-      signedOut,
-    },
-  },
-  store,
 };
 </script>
 

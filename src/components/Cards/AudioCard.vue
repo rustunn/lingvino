@@ -17,8 +17,12 @@
         <div class="bar" :style="barWidth"></div>
         <input v-if="controls" type="range" class="slider" min="0" :max="duration" v-model="currentTime" @touchStart="sliderTouched" @touchEnd="sliderReleased">
       </div>
-      <button v-if="controls" type="icon" :icon="buttonIcon" @click="buttonClicked"></button>
-      <audio :src="src"></audio>
+      <div v-if="controls" class="controls">
+        <button type="icon" icon="previous" @click="previousClicked"></button>
+        <button type="icon" :icon="buttonIcon" @click="buttonClicked"></button>
+        <button type="icon" icon="next" @click="nextClicked"></button>
+      </div>
+      <audio :src="src" :autoplay="autoplay"></audio>
     </div>
   </div>
 </template>
@@ -36,6 +40,10 @@ export default {
     controls: {
       type: Boolean,
       default: false,
+    },
+    autoplay: {
+      type: Boolean,
+      default: true,
     },
   },
   data() {
@@ -78,6 +86,12 @@ export default {
       return icon;
     },
   },
+  watch: {
+    src() {
+      this.buffered = 0;
+      this.currentTime = 0;
+    },
+  },
   methods: {
     addAudioEvents() {
       this.audio.ondurationchange = () => {
@@ -96,15 +110,16 @@ export default {
         this.$emit('audio-ended');
       };
 
-      this.audio.onprogress = () => {
-        this.play();
-      };
+      // this.audio.onprogress = () => {
+      //   if (this.autoplay) this.play();
+      // };
 
       this.audio.onwaiting = () => {
         this.buffering = true;
       };
 
       this.audio.onplaying = () => {
+        this.playing = true;
         if (this.buffering) this.buffering = false;
       };
     },
@@ -126,6 +141,12 @@ export default {
     buttonClicked() {
       if (this.playing) this.pause();
       else this.play();
+    },
+    nextClicked() {
+      this.$emit('next');
+    },
+    previousClicked() {
+      this.$emit('previous');
     },
   },
   filters: {
@@ -234,6 +255,14 @@ export default {
         top: 0;
         background: transparent;
       }
+    }
+    
+    .controls {
+      position: relative;
+      display: flex;
+      fles-direction: row;
+      align-items: center;
+      justify-content: center;
     }
   }
 }

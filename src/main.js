@@ -5,8 +5,6 @@ import Home from './components/Home';
 import SignIn from './components/SignIn';
 import Learn from './components/Learn';
 import GetStarted from './components/GetStarted';
-import { sync } from 'vuex-router-sync';
-import store from './vuex/store';
 import VueValidator from 'vue-validator';
 
 Vue.use(VueValidator);
@@ -14,7 +12,6 @@ Vue.use(Router);
 
 /* eslint-disable no-new */
 const router = new Router({ history: true });
-sync(store, router);
 
 router.map({
   '/': {

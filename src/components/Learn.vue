@@ -2,14 +2,27 @@
   <div class="page">
     <header-el title="My Lessons">
       <button slot="left" icon="menu" type="icon" @click="toggleDrawer"></button>
-      <button slot="right" @click="signOut" text-color="light" :colored="false" :raised="false">Sign Out</button>
     </header-el>
+    
+    <audio-card v-if="currentLesson" :src="currentLesson.src" :controls="true" :autoplay="autoplay" @next="nextLesson" @previous="prevLesson">
+      {{currentLesson.title}}
+    </audio-card>
+    
     <div class="dim" v-if="drawer" transition="dim" @click="toggleDrawer"></div>
+    
     <drawer v-if="drawer" :list="" :first="" :opened.sync="drawer">
+      <div v-for="section in lessons" class="section">
+        <ul>
+          <li v-for="lesson in section" :class="{ 'selected': lesson === currentLesson }" @click="lessonSelected($parent.$index, $index)">
+            <span>{{lesson.title}}</span>
+          </li>
+        </ul>
+      </div>
+    
       <div class="section">
         <ul>
           <li>
-            <span>Sign Out</span>
+            <span @click="signOut">Sign Out</span>
           </li>
           <li>
             <span>Change Password</span>
@@ -32,56 +45,69 @@ import firebase from 'firebase';
 import HeaderEl from './Common/Header';
 import Button from './Common/Button';
 import Drawer from './Common/Drawer';
+import AudioCard from './Cards/AudioCard';
 
-import {
-  isSignedIn,
-} from '../vuex/getters';
-
-import {
-  signedOut,
-} from '../vuex/actions';
+import lessonsSets from '../data/lessons';
 
 export default {
+  props: ['user', 'userData'],
   data() {
     return {
+      lessonsSets,
       drawer: false,
+      autoplay: false,
     };
+  },
+  computed: {
+    lessons() {
+      let data = null;
+      if (this.userData && this.userData.levels) data = this.lessonsSets[5 - this.userData.levels];
+      return data;
+    },
+    currentLesson() {
+      let data = null;
+      if (this.lessons && this.userData && this.userData.currentLesson) {
+        data = this.lessons[this.userData.currentLesson[0]][this.userData.currentLesson[1]];
+      }
+      return data;
+    },
   },
   methods: {
     signOut() {
-      firebase.auth().signOut()
-      .then(() => {
-        this.signedOut();
-        this.$route.router.go('/');
-      }, (error) => {
-        console.log(error);
-      });
+      firebase.auth().signOut();
     },
     toggleDrawer() {
       this.drawer = !this.drawer;
     },
-  },
-  route: {
-    activate(transition) {
-      if (this.isSignedIn) {
-        transition.next();
-      } else {
-        transition.redirect('/');
+    lessonSelected(section, lesson) {
+      this.drawer = false;
+      this.autoplay = true;
+      firebase.database().ref(`users/${this.user.uid}`).update({
+        currentLesson: [section, lesson],
+      });
+    },
+    nextLesson() {
+      const lessonsInModule = this.lessons[this.userData.currentLesson[0]].length;
+      if (this.userData.currentLesson[1] < lessonsInModule - 1) {
+        this.lessonSelected(this.userData.currentLesson[0], this.userData.currentLesson[1] + 1);
+      } else if (this.userData.currentLesson[0] < this.lessons.length - 1) {
+        this.lessonSelected(this.userData.currentLesson[0] + 1, 0);
       }
     },
-  },
-  vuex: {
-    getters: {
-      isSignedIn,
-    },
-    actions: {
-      signedOut,
+    prevLesson() {
+      if (this.userData.currentLesson[1] > 0) {
+        this.lessonSelected(this.userData.currentLesson[0], this.userData.currentLesson[1] - 1);
+      } else if (this.userData.currentLesson[0] > 0) {
+        const lessonsInPrevModule = this.lessons[this.userData.currentLesson[0] - 1].length;
+        this.lessonSelected(this.userData.currentLesson[0] - 1, lessonsInPrevModule - 1);
+      }
     },
   },
   components: {
     HeaderEl,
     Button,
     Drawer,
+    AudioCard,
   },
 };
 </script>
@@ -108,6 +134,10 @@ export default {
     display: block;
     padding: 24px 0;
     border-top: 1px rgba(0,0,0,0.12) solid;
+    
+    &:first-child {
+      border: 0;
+    }
   
     ul {
       position: relative;
@@ -127,8 +157,12 @@ export default {
         padding: 16px;
         overflow: hidden;
         
-        &:hover {
+        &:hover, &.selected {
           background-color: #eee;
+        }
+        
+        &.selected {
+          color: black;
         }
         
         span {

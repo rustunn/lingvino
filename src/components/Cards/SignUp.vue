@@ -12,11 +12,6 @@ import firebase from 'firebase';
 import Button from '../Common/Button';
 import TextField from '../Common/TextField';
 
-import {
-  signedIn,
-  setUserData,
-} from '../../vuex/actions';
-
 export default {
   props: {
     levels: {
@@ -37,22 +32,11 @@ export default {
     signup() {
       firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
       .then((user) => {
-        this.signedIn(user);
         firebase.database().ref(`users/${user.uid}`).set({
           levels: this.levels,
+          currentLesson: [0, 0],
         });
-        this.setUserData({ levels: this.levels });
-        this.$router.go('/learn');
-      })
-      .catch((error) => {
-        console.log(error);
       });
-    },
-  },
-  vuex: {
-    actions: {
-      signedIn,
-      setUserData,
     },
   },
   components: {

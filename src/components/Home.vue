@@ -1,43 +1,43 @@
 <template>
   <div class="page">
-    <header-el title="Lingvino">
-      <button slot="right" v-link="{ path: '/signin' }" text-color="light" :colored="false" :raised="false">Sign In</button>
-    </header-el>
-    <main>
-      <div class="card">
-        <h1>Spoken English for Everyone</h1>
-        <button v-link:="{ path: 'get-started'}" :colored="true" text-color="light" :raised="true">Get started</button>
-      </div>
-    </main>
+    <component :is="page" :user="user" :user-data="userData"></component>
   </div>
 </template>
 
 <script>
-import HeaderEl from './Common/Header';
-import Button from './Common/Button';
-
-import {
-  isSignedIn,
-} from '../vuex/getters';
+import Splash from './Splash';
+import Learn from './Learn';
 
 export default {
+  props: ['user', 'userData'],
+  data() {
+    return {
+      page: 'splash',
+    };
+  },
+  watch: {
+    user() {
+      this.changePage();
+    },
+  },
   route: {
     activate(transition) {
-      if (this.isSignedIn) {
-        transition.redirect('/learn');
+      this.changePage();
+      transition.next();
+    },
+  },
+  methods: {
+    changePage() {
+      if (this.user) {
+        this.page = 'learn';
       } else {
-        transition.next();
+        this.page = 'splash';
       }
     },
   },
-  vuex: {
-    getters: {
-      isSignedIn,
-    },
-  },
   components: {
-    Button,
-    HeaderEl,
+    Splash,
+    Learn,
   },
 };
 </script>
