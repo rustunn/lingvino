@@ -17,6 +17,8 @@
         <ul>
           <li v-for="lesson in section" :class="{ 'selected': lesson === currentLesson }" @click="lessonSelected($parent.$index, $index)">
             <span>{{lesson.title}}</span>
+            <span v-if="getProgress($parent.$index, $index) > 0 && getProgress($parent.$index, $index) < 100" class="progress-badge">{{getProgress($parent.$index, $index)}}%</span>
+            <div v-if="getProgress($parent.$index, $index) >= 100" class="progress-completed"></div>
           </li>
         </ul>
       </div>
@@ -75,11 +77,14 @@ export default {
       return data;
     },
     progress() {
-      const section = this.userData.currentLesson[0];
-      const lesson = this.userData.currentLesson[1];
-      const num = this.userData.progress[section][lesson] / this.lessons[section][lesson].reps;
-      let final = Math.floor(num * 100);
-      if (final > 100) final = 100;
+      let final = 0;
+      if (this.userData) {
+        const section = this.userData.currentLesson[0];
+        const lesson = this.userData.currentLesson[1];
+        const num = this.userData.progress[section][lesson] / this.lessons[section][lesson].reps;
+        final = Math.floor(num * 100);
+        if (final > 100) final = 100;
+      }
       return final;
     },
     repeat() {
@@ -128,6 +133,12 @@ export default {
       firebase.database().ref(`users/${this.user.uid}`).update({
         progress: this.userData.progress,
       });
+    },
+    getProgress(section, lesson) {
+      const num = this.userData.progress[section][lesson] / this.lessons[section][lesson].reps;
+      let final = Math.floor(num * 100);
+      if (final > 100) final = 100;
+      return final;
     },
   },
   components: {
@@ -181,6 +192,7 @@ export default {
         display: flex;
         flex-direction: row;
         align-items: center;
+        justify-content: space-between;
         min-height: 48px;
         padding: 16px;
         overflow: hidden;
@@ -203,6 +215,25 @@ export default {
           letter-spacing: .04em;
           line-height: 1;
           color: rgba(0,0,0,.87);
+        }
+        
+        .progress-badge {
+          position: relative;
+          width: 40px;
+          flex-grow: 0;
+          flex-shrink: 0;
+          text-align: right;
+          font-size: 12px;
+        }
+        
+        .progress-completed {
+          position: relative;
+          width: 16px;
+          height: 16px;
+          flex-grow: 0;
+          flex-shrink: 0;
+          background-image: url('/static/icons/ic_done_black_24px.svg');
+          background-size: 16px 16px;
         }
       }
     }
