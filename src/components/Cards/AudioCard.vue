@@ -45,6 +45,10 @@ export default {
       type: Boolean,
       default: true,
     },
+    loop: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -105,14 +109,12 @@ export default {
         }
       };
 
+      // does not triggered if loop = true
       this.audio.onended = () => {
         this.pause();
         this.$emit('audio-ended');
+        if (this.loop) this.play();
       };
-
-      // this.audio.onprogress = () => {
-      //   if (this.autoplay) this.play();
-      // };
 
       this.audio.onwaiting = () => {
         this.buffering = true;

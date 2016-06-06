@@ -9,6 +9,8 @@
 <script>
 import firebase from 'firebase';
 
+import lessonsSets from '../../data/lessons';
+
 import Button from '../Common/Button';
 import TextField from '../Common/TextField';
 
@@ -24,9 +26,23 @@ export default {
   },
   data() {
     return {
-      email: undefined,
-      password: undefined,
+      email: null,
+      password: null,
+      lessonsSets,
+      progress: null,
     };
+  },
+  created() {
+    const lessons = this.lessonsSets[5 - this.levels];
+    const data = [];
+    lessons.forEach(section => {
+      const sectionData = [];
+      section.forEach(() => {
+        sectionData.push(0);
+      });
+      data.push(sectionData);
+    });
+    this.progress = data;
   },
   methods: {
     signup() {
@@ -35,6 +51,7 @@ export default {
         firebase.database().ref(`users/${user.uid}`).set({
           levels: this.levels,
           currentLesson: [0, 0],
+          progress: this.progress,
         });
       });
     },

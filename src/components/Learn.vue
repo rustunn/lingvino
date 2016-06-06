@@ -4,7 +4,9 @@
       <button slot="left" icon="menu" type="icon" @click="toggleDrawer"></button>
     </header-el>
     
-    <audio-card v-if="currentLesson" :src="currentLesson.src" :controls="true" :autoplay="autoplay" @next="nextLesson" @previous="prevLesson">
+    <progress-card :progress="progress"></progress-card>
+    
+    <audio-card v-if="currentLesson" :src="currentLesson.src" :controls="true" :autoplay="autoplay" :loop="repeat" @next="nextLesson" @previous="prevLesson" @audio-ended="audioEnded">
       {{currentLesson.title}}
     </audio-card>
     
@@ -46,6 +48,7 @@ import HeaderEl from './Common/Header';
 import Button from './Common/Button';
 import Drawer from './Common/Drawer';
 import AudioCard from './Cards/AudioCard';
+import ProgressCard from './Cards/ProgressCard';
 
 import lessonsSets from '../data/lessons';
 
@@ -70,6 +73,19 @@ export default {
         data = this.lessons[this.userData.currentLesson[0]][this.userData.currentLesson[1]];
       }
       return data;
+    },
+    progress() {
+      const section = this.userData.currentLesson[0];
+      const lesson = this.userData.currentLesson[1];
+      const num = this.userData.progress[section][lesson] / this.lessons[section][lesson].reps;
+      let final = Math.floor(num * 100);
+      if (final > 100) final = 100;
+      return final;
+    },
+    repeat() {
+      const section = this.userData.currentLesson[0];
+      const lesson = this.userData.currentLesson[1];
+      return this.userData.progress[section][lesson] + 1 < this.lessons[section][lesson].reps;
     },
   },
   methods: {
@@ -102,12 +118,24 @@ export default {
         this.lessonSelected(this.userData.currentLesson[0] - 1, lessonsInPrevModule - 1);
       }
     },
+    audioEnded() {
+      if (!this.repeat) {
+        this.nextLesson();
+      }
+      const section = this.userData.currentLesson[0];
+      const lesson = this.userData.currentLesson[1];
+      this.userData.progress[section][lesson]++;
+      firebase.database().ref(`users/${this.user.uid}`).update({
+        progress: this.userData.progress,
+      });
+    },
   },
   components: {
     HeaderEl,
     Button,
     Drawer,
     AudioCard,
+    ProgressCard,
   },
 };
 </script>
