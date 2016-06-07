@@ -183,7 +183,7 @@ export default {
 
 <style lang="scss" scoped>
 .step-transition {
-  position: absolute;
+  /*position: absolute;*/
   transition: 0.3s ease-in-out 0s;
   transform: translateX(0vw);
 }
