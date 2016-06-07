@@ -11,6 +11,8 @@
 </template>
 
 <script>
+import firebase from 'firebase';
+
 import InfoCard from './Cards/InfoCard';
 import AudioCard from './Cards/AudioCard';
 import RateCard from './Cards/RateCard';
@@ -63,35 +65,35 @@ export default {
       stories: [
         [
           {
-            src: '/static/audio/story1_1.mp3',
+            src: 'stories/story1_1.mp3',
             used: false,
           },
           {
-            src: '/static/audio/story1_2.mp3',
-            used: false,
-          },
-        ],
-        [
-          {
-            src: '/static/audio/story2_1.mp3',
-            used: false,
-          },
-          {
-            src: '/static/audio/story2_2.mp3',
-            used: false,
-          },
-          {
-            src: '/static/audio/story2_3.mp3',
+            src: 'stories/story1_2.mp3',
             used: false,
           },
         ],
         [
           {
-            src: '/static/audio/story3_1.mp3',
+            src: 'stories/story2_1.mp3',
             used: false,
           },
           {
-            src: '/static/audio/story3_2.mp3',
+            src: 'stories/story2_2.mp3',
+            used: false,
+          },
+          {
+            src: 'stories/story2_3.mp3',
+            used: false,
+          },
+        ],
+        [
+          {
+            src: 'stories/story3_1.mp3',
+            used: false,
+          },
+          {
+            src: 'stories/story3_2.mp3',
             used: false,
           },
         ],
@@ -100,14 +102,22 @@ export default {
       level: 1,
       points: 0,
       pointsRange: [18, 32],
+      audioSrc: '',
     };
   },
   computed: {
     step() {
       return this.steps[this.currentStep];
     },
-    audioSrc() {
-      let src = '';
+    levelsInCourse() {
+      let levels = 4;
+      if (this.points > this.pointsRange[1]) levels = 3;
+      else if (this.points < this.pointsRange[0]) levels = 5;
+      return levels;
+    },
+  },
+  watch: {
+    step() {
       if (this.step.component === 'audio-card') {
         let found = false;
         let num;
@@ -118,15 +128,32 @@ export default {
             found = true;
           }
         }
-        src = this.stories[this.level][num].src;
+        const storage = firebase.storage();
+        const pathReference = storage.ref(this.stories[this.level][num].src);
+        pathReference.getDownloadURL().then(url => {
+          this.audioSrc = url;
+        }).catch(error => {
+          switch (error.code) {
+            case 'storage/object_not_found':
+              // File doesn't exist
+              break;
+
+            case 'storage/unauthorized':
+              // User doesn't have permission to access the object
+              break;
+
+            case 'storage/canceled':
+              // User canceled the upload
+              break;
+
+            case 'storage/unknown':
+              // Unknown error occurred, inspect the server response
+              break;
+            default:
+              break;
+          }
+        });
       }
-      return src;
-    },
-    levelsInCourse() {
-      let levels = 4;
-      if (this.points > this.pointsRange[1]) levels = 3;
-      else if (this.points < this.pointsRange[0]) levels = 5;
-      return levels;
     },
   },
   methods: {

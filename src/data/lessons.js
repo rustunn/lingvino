@@ -1,17 +1,17 @@
 const about = [
   {
     title: 'About the Course',
-    src: '/static/audio/lessons/about.mp3',
+    src: 'lessons/about.mp3',
     reps: 1,
   },
   {
     title: 'Our Method',
-    src: '/static/audio/lessons/method.mp3',
+    src: 'lessons/method.mp3',
     reps: 1,
   },
   {
     title: 'Learning Rules',
-    src: '/static/audio/lessons/rules.mp3',
+    src: 'lessons/rules.mp3',
     reps: 1,
   },
 ];
@@ -19,57 +19,57 @@ const about = [
 const level1 = [
   {
     title: 'Into 1',
-    src: '/static/audio/lessons/intro_1.mp3',
+    src: 'lessons/intro_1.mp3',
     reps: 1,
   },
   {
     title: 'Lesson 1',
-    src: '/static/audio/lessons/lesson_1_1.mp3',
+    src: 'lessons/lesson_1_1.mp3',
     reps: 38,
   },
   {
     title: 'Lesson 2',
-    src: '/static/audio/lessons/lesson_1_2.mp3',
+    src: 'lessons/lesson_1_2.mp3',
     reps: 37,
   },
   {
     title: 'Lesson 3',
-    src: '/static/audio/lessons/lesson_1_3.mp3',
+    src: 'lessons/lesson_1_3.mp3',
     reps: 35,
   },
   {
     title: 'Lesson 4',
-    src: '/static/audio/lessons/lesson_1_4.mp3',
+    src: 'lessons/lesson_1_4.mp3',
     reps: 35,
   },
   {
     title: 'Lesson 5',
-    src: '/static/audio/lessons/lesson_1_5.mp3',
+    src: 'lessons/lesson_1_5.mp3',
     reps: 36,
   },
   {
     title: 'Lesson 6',
-    src: '/static/audio/lessons/lesson_1_6.mp3',
+    src: 'lessons/lesson_1_6.mp3',
     reps: 34,
   },
   {
     title: 'Lesson 7',
-    src: '/static/audio/lessons/lesson_1_7.mp3',
+    src: 'lessons/lesson_1_7.mp3',
     reps: 36,
   },
   {
     title: 'Lesson 8',
-    src: '/static/audio/lessons/lesson_1_8.mp3',
+    src: 'lessons/lesson_1_8.mp3',
     reps: 29,
   },
   {
     title: 'Lesson 9',
-    src: '/static/audio/lessons/lesson_1_9.mp3',
+    src: 'lessons/lesson_1_9.mp3',
     reps: 35,
   },
   {
     title: 'Lesson 10',
-    src: '/static/audio/lessons/lesson_1_10.mp3',
+    src: 'lessons/lesson_1_10.mp3',
     reps: 34,
   },
 ];
@@ -77,63 +77,63 @@ const level1 = [
 const level2 = {
   introBeginning: {
     title: 'Into 2',
-    src: '/static/audio/lessons/intro_2_beggining.mp3',
+    src: 'lessons/intro_2_beggining.mp3',
     reps: 1,
   },
   introCountinue: {
     title: 'Into 2',
-    src: '/static/audio/lessons/intro_2_countinue.mp3',
+    src: 'lessons/intro_2_countinue.mp3',
     reps: 1,
   },
   lessons: [
     {
       title: 'Lesson 1',
-      src: '/static/audio/lessons/lesson_2_1.mp3',
+      src: 'lessons/lesson_2_1.mp3',
       reps: 34,
     },
     {
       title: 'Lesson 2',
-      src: '/static/audio/lessons/lesson_2_2.mp3',
+      src: 'lessons/lesson_2_2.mp3',
       reps: 27,
     },
     {
       title: 'Lesson 3',
-      src: '/static/audio/lessons/lesson_2_3.mp3',
+      src: 'lessons/lesson_2_3.mp3',
       reps: 26,
     },
     {
       title: 'Lesson 4',
-      src: '/static/audio/lessons/lesson_2_4.mp3',
+      src: 'lessons/lesson_2_4.mp3',
       reps: 24,
     },
     {
       title: 'Lesson 5',
-      src: '/static/audio/lessons/lesson_2_5.mp3',
+      src: 'lessons/lesson_2_5.mp3',
       reps: 25,
     },
     {
       title: 'Lesson 6',
-      src: '/static/audio/lessons/lesson_2_6.mp3',
+      src: 'lessons/lesson_2_6.mp3',
       reps: 24,
     },
     {
       title: 'Lesson 7',
-      src: '/static/audio/lessons/lesson_2_7.mp3',
+      src: 'lessons/lesson_2_7.mp3',
       reps: 25,
     },
     {
       title: 'Lesson 8',
-      src: '/static/audio/lessons/lesson_2_8.mp3',
+      src: 'lessons/lesson_2_8.mp3',
       reps: 24,
     },
     {
       title: 'Lesson 9',
-      src: '/static/audio/lessons/lesson_2_9.mp3',
+      src: 'lessons/lesson_2_9.mp3',
       reps: 25,
     },
     {
       title: 'Lesson 10',
-      src: '/static/audio/lessons/lesson_2_10.mp3',
+      src: 'lessons/lesson_2_10.mp3',
       reps: 24,
     },
   ],
@@ -142,63 +142,63 @@ const level2 = {
 const level3 = {
   introBeginning: {
     title: 'Into 3',
-    src: '/static/audio/lessons/intro_3_beggining.mp3',
+    src: 'lessons/intro_3_beggining.mp3',
     reps: 1,
   },
   introCountinue: {
     title: 'Into 3',
-    src: '/static/audio/lessons/intro_3_countinue.mp3',
+    src: 'lessons/intro_3_countinue.mp3',
     reps: 1,
   },
   lessons: [
     {
       title: 'Lesson 1',
-      src: '/static/audio/lessons/lesson_3_1.mp3',
+      src: 'lessons/lesson_3_1.mp3',
       reps: 28,
     },
     {
       title: 'Lesson 2',
-      src: '/static/audio/lessons/lesson_3_2.mp3',
+      src: 'lessons/lesson_3_2.mp3',
       reps: 27,
     },
     {
       title: 'Lesson 3',
-      src: '/static/audio/lessons/lesson_3_3.mp3',
+      src: 'lessons/lesson_3_3.mp3',
       reps: 30,
     },
     {
       title: 'Lesson 4',
-      src: '/static/audio/lessons/lesson_3_4.mp3',
+      src: 'lessons/lesson_3_4.mp3',
       reps: 32,
     },
     {
       title: 'Lesson 5',
-      src: '/static/audio/lessons/lesson_3_5.mp3',
+      src: 'lessons/lesson_3_5.mp3',
       reps: 30,
     },
     {
       title: 'Lesson 6',
-      src: '/static/audio/lessons/lesson_3_6.mp3',
+      src: 'lessons/lesson_3_6.mp3',
       reps: 31,
     },
     {
       title: 'Lesson 7',
-      src: '/static/audio/lessons/lesson_3_7.mp3',
+      src: 'lessons/lesson_3_7.mp3',
       reps: 33,
     },
     {
       title: 'Lesson 8',
-      src: '/static/audio/lessons/lesson_3_8.mp3',
+      src: 'lessons/lesson_3_8.mp3',
       reps: 29,
     },
     {
       title: 'Lesson 9',
-      src: '/static/audio/lessons/lesson_3_9.mp3',
+      src: 'lessons/lesson_3_9.mp3',
       reps: 33,
     },
     {
       title: 'Lesson 10',
-      src: '/static/audio/lessons/lesson_3_10.mp3',
+      src: 'lessons/lesson_3_10.mp3',
       reps: 37,
     },
   ],
@@ -207,57 +207,57 @@ const level3 = {
 const level4 = [
   {
     title: 'Into 4',
-    src: '/static/audio/lessons/intro_4.mp3',
+    src: 'lessons/intro_4.mp3',
     reps: 1,
   },
   {
     title: 'Lesson 1',
-    src: '/static/audio/lessons/lesson_4_1.mp3',
+    src: 'lessons/lesson_4_1.mp3',
     reps: 33,
   },
   {
     title: 'Lesson 2',
-    src: '/static/audio/lessons/lesson_4_2.mp3',
+    src: 'lessons/lesson_4_2.mp3',
     reps: 29,
   },
   {
     title: 'Lesson 3',
-    src: '/static/audio/lessons/lesson_4_3.mp3',
+    src: 'lessons/lesson_4_3.mp3',
     reps: 29,
   },
   {
     title: 'Lesson 4',
-    src: '/static/audio/lessons/lesson_4_4.mp3',
+    src: 'lessons/lesson_4_4.mp3',
     reps: 31,
   },
   {
     title: 'Lesson 5',
-    src: '/static/audio/lessons/lesson_4_5.mp3',
+    src: 'lessons/lesson_4_5.mp3',
     reps: 30,
   },
   {
     title: 'Lesson 6',
-    src: '/static/audio/lessons/lesson_4_6.mp3',
+    src: 'lessons/lesson_4_6.mp3',
     reps: 28,
   },
   {
     title: 'Lesson 7',
-    src: '/static/audio/lessons/lesson_4_7.mp3',
+    src: 'lessons/lesson_4_7.mp3',
     reps: 27,
   },
   {
     title: 'Lesson 8',
-    src: '/static/audio/lessons/lesson_4_8.mp3',
+    src: 'lessons/lesson_4_8.mp3',
     reps: 31,
   },
   {
     title: 'Lesson 9',
-    src: '/static/audio/lessons/lesson_4_9.mp3',
+    src: 'lessons/lesson_4_9.mp3',
     reps: 29,
   },
   {
     title: 'Lesson 10',
-    src: '/static/audio/lessons/lesson_4_10.mp3',
+    src: 'lessons/lesson_4_10.mp3',
     reps: 32,
   },
 ];
@@ -265,57 +265,57 @@ const level4 = [
 const level5 = [
   {
     title: 'Into 5',
-    src: '/static/audio/lessons/intro_5.mp3',
+    src: 'lessons/intro_5.mp3',
     reps: 1,
   },
   {
     title: 'Lesson 1',
-    src: '/static/audio/lessons/lesson_5_1.mp3',
+    src: 'lessons/lesson_5_1.mp3',
     reps: 36,
   },
   {
     title: 'Lesson 2',
-    src: '/static/audio/lessons/lesson_5_2.mp3',
+    src: 'lessons/lesson_5_2.mp3',
     reps: 37,
   },
   {
     title: 'Lesson 3',
-    src: '/static/audio/lessons/lesson_5_3.mp3',
+    src: 'lessons/lesson_5_3.mp3',
     reps: 31,
   },
   {
     title: 'Lesson 4',
-    src: '/static/audio/lessons/lesson_5_4.mp3',
+    src: 'lessons/lesson_5_4.mp3',
     reps: 32,
   },
   {
     title: 'Lesson 5',
-    src: '/static/audio/lessons/lesson_5_5.mp3',
+    src: 'lessons/lesson_5_5.mp3',
     reps: 34,
   },
   {
     title: 'Lesson 6',
-    src: '/static/audio/lessons/lesson_5_6.mp3',
+    src: 'lessons/lesson_5_6.mp3',
     reps: 33,
   },
   {
     title: 'Lesson 7',
-    src: '/static/audio/lessons/lesson_5_7.mp3',
+    src: 'lessons/lesson_5_7.mp3',
     reps: 38,
   },
   {
     title: 'Lesson 8',
-    src: '/static/audio/lessons/lesson_5_8.mp3',
+    src: 'lessons/lesson_5_8.mp3',
     reps: 32,
   },
   {
     title: 'Lesson 9',
-    src: '/static/audio/lessons/lesson_5_9.mp3',
+    src: 'lessons/lesson_5_9.mp3',
     reps: 33,
   },
   {
     title: 'Lesson 10',
-    src: '/static/audio/lessons/lesson_5_10.mp3',
+    src: 'lessons/lesson_5_10.mp3',
     reps: 34,
   },
 ];
@@ -323,7 +323,7 @@ const level5 = [
 const final = [
   {
     title: 'Final',
-    src: '/static/audio/lessons/final.mp3',
+    src: 'lessons/final.mp3',
     reps: 1,
   },
 ];

@@ -6,7 +6,7 @@
     
     <progress-card :progress="progress"></progress-card>
     
-    <audio-card v-if="currentLesson" :src="currentLesson.src" :controls="true" :autoplay="autoplay" :loop="repeat" @next="nextLesson" @previous="prevLesson" @audio-ended="audioEnded">
+    <audio-card v-if="currentLesson" :src="audioSrc" :controls="true" :autoplay="autoplay" :loop="repeat" @next="nextLesson" @previous="prevLesson" @audio-ended="audioEnded">
       {{currentLesson.title}}
     </audio-card>
     
@@ -61,6 +61,7 @@ export default {
       lessonsSets,
       drawer: false,
       autoplay: false,
+      audioSrc: '',
     };
   },
   computed: {
@@ -91,6 +92,37 @@ export default {
       const section = this.userData.currentLesson[0];
       const lesson = this.userData.currentLesson[1];
       return this.userData.progress[section][lesson] + 1 < this.lessons[section][lesson].reps;
+    },
+  },
+  watch: {
+    currentLesson() {
+      if (this.currentLesson) {
+        const storage = firebase.storage();
+        const pathReference = storage.ref(this.currentLesson.src);
+        pathReference.getDownloadURL().then(url => {
+          this.audioSrc = url;
+        }).catch(error => {
+          switch (error.code) {
+            case 'storage/object_not_found':
+              // File doesn't exist
+              break;
+
+            case 'storage/unauthorized':
+              // User doesn't have permission to access the object
+              break;
+
+            case 'storage/canceled':
+              // User canceled the upload
+              break;
+
+            case 'storage/unknown':
+              // Unknown error occurred, inspect the server response
+              break;
+            default:
+              break;
+          }
+        });
+      }
     },
   },
   methods: {

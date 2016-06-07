@@ -2,7 +2,7 @@
   <div class="container">
     <router-view :user="user" :user-data="userData"></router-view>
   </div>
-  <footer></footer>
+  <footer>&#169; Lingvion 2016</footer>
 </template>
 
 <script>
@@ -61,17 +61,23 @@ html, body {
 .container {
   position: relative;
   min-height: 100%;
-  margin-bottom: -2rem;
-  padding-bottom: 2rem;
+  margin-bottom: -20px;
+  padding-bottom: 20px;
   box-sizing: border-box;
 }
 
 footer {
+  position: relative;
   width: 100%;
   box-sizing: border-box;
   padding: 0 1.8rem 0 1.8rem;
   background: #616161;
-  height: 2rem;
+  height: 20px;
+  color: white;
+  line-height: 20px;
+  font-size: 12px;
+  text-align: right;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 }
 
 .view-transition {
