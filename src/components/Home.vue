@@ -52,10 +52,11 @@ main {
   box-sizing: border-box;
   
   h1 {
-    font-size: 34px;
+    font-size: 32px;
     font-weight: 400;
     padding: 34px;
     color: $grey;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   }
 }
 </style>

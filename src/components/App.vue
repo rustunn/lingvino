@@ -51,6 +51,7 @@ export default {
   border: 0;
   -webkit-overflow-scrolling: touch;
   overflow-scrolling: touch;
+  user-select: none;
 }
 
 html, body {
@@ -69,9 +70,8 @@ footer {
   width: 100%;
   box-sizing: border-box;
   padding: 0 1.8rem 0 1.8rem;
-  background: #282828;
+  background: #616161;
   height: 2rem;
-  background: #424242;
 }
 
 .view-transition {

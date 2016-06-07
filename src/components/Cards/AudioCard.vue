@@ -192,6 +192,7 @@ export default {
 .audio-card {
   h3 {
     @include title;
+    margin-bottom: 10px;
   }
   
   .player {
