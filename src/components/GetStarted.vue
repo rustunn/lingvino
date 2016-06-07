@@ -3,10 +3,10 @@
     <header-el title="Get Started">
       <button slot="left" icon="back" type="icon" v-link="{ path: '/' }"></button>
     </header-el>   
-    <info-card v-if="step.component === 'info-card'" :button="step.button" v-on:clicked="clicked" transition="step">{{step.text}}</info-card>
-    <audio-card v-if="step.component === 'audio-card'" :src="audioSrc" :autoplay="true" v-on:audio-ended="audioEnded" transition="step">Listen carefully!</audio-card>
-    <rate-card v-if="step.component === 'rate-card'" v-on:rated="rated" transition="step"></rate-card>
-    <sign-up v-if="step.component === 'sign-up'" :levels="levelsInCourse" transition="step"></sign-up>
+    <info-card v-if="step.component === 'info-card'" :button="step.button" v-on:clicked="clicked">{{step.text}}</info-card>
+    <audio-card v-if="step.component === 'audio-card'" :src="audioSrc" :autoplay="true" v-on:audio-ended="audioEnded">Listen carefully!</audio-card>
+    <rate-card v-if="step.component === 'rate-card'" v-on:rated="rated"></rate-card>
+    <sign-up v-if="step.component === 'sign-up'" :levels="levelsInCourse"></sign-up>
   </div>
 </template>
 
@@ -180,17 +180,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.step-transition {
-  /*position: absolute;*/
-  transition: 0.3s ease-in-out 0s;
-  transform: translateX(0vw);
-}
-.step-leave {
-  transform: translateX(-100vw);
-}
-.step-enter {
-  transform: translateX(100vw);
-}
-</style>
