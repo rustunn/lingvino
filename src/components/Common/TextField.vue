@@ -3,6 +3,7 @@
     <div class="label" v-if="placeholder !== ''" class="placeholder" :class="{ 'raised': focused || value }">{{placeholder}}</div>
     <input :type="type" v-model="value" @focus="focus" @blur="unfocus">
     <div class="line" :class="{ 'shown': focused }"></div>
+    <div v-if="error" class="error">{{error}}</div>
   </div>
 </template>
 
@@ -28,6 +29,9 @@ export default {
         return value === 'text' || value === 'password' || value === 'email' || value === 'number';
       },
       default: 'text',
+    },
+    error: {
+      type: String,
     },
   },
   methods: {
@@ -104,10 +108,25 @@ export default {
     background: $mainColor;
     transform: scale(0, 1);
     transition: all 0.3s ease-in-out 0s;
+    z-index: 1;
     
     &.shown {
       transform: scale(1);
     }
+  }
+
+  .error {
+    position: absolute;
+    left: 0;
+    top: 50px;
+    width: 100%;
+    height: 12px;
+    font-size: 12px;
+    font-family: "Helvetica","Arial",sans-serif;
+    color: red;
+    overflow: hidden;
+    box-sizing: border-box;
+    padding: 0 4px;
   }
 }
 </style>

@@ -4,9 +4,9 @@
       <button slot="left" icon="back" type="icon" v-link="{ path: '/' }"></button>
     </header-el>
     <div class="card">
-      <text-field type="email" placeholder="Email" :value.sync="email"></text-field>
-      <text-field type="password" placeholder="Password" :value.sync="password"></text-field>
-      <button text-color="light" :raised="true" :colored="true" @click="signin">Sign In</button>
+      <text-field type="email" placeholder="Email" :value.sync="email" :error="emailError"></text-field>
+      <text-field type="password" placeholder="Password" :value.sync="password" :error="passwordError"></text-field>
+      <button text-color="light" :raised="true" :colored="true" :disabled="!valid || disabled" @click="signin">Sign In</button>
     </div>
   </div>
 </template>
@@ -23,11 +23,64 @@ export default {
     return {
       email: '',
       password: '',
+      emailError: '',
+      passwordError: '',
+      disabled: false,
     };
+  },
+  computed: {
+    valid() {
+      let val = false;
+      const emptyEmail = this.email.length === 0;
+      const emptyPassword = this.password.length === 0;
+      const emailError = this.emailError.length > 0;
+      if (!emptyEmail && !emptyPassword && !emailError) {
+        val = true;
+      }
+      return val;
+    },
+  },
+  watch: {
+    email() {
+      if (this.email.length > 5 && !this.validateEmail(this.email)) {
+        this.emailError = 'This is not a valid email';
+      } else {
+        this.emailError = '';
+      }
+    },
   },
   methods: {
     signin() {
-      firebase.auth().signInWithEmailAndPassword(this.email, this.password);
+      if (this.valid) {
+        this.disabled = true;
+        firebase.auth().signInWithEmailAndPassword(this.email, this.password)
+        .catch(error => {
+          switch (error.code) {
+            case 'auth/user-not-found':
+            case 'auth/invalid-credential':
+              this.emailError = 'User with such email does not exist';
+              break;
+            case 'auth/invalid-email':
+              this.emailError = 'This is not a valid email';
+              break;
+            case 'auth/wrong-password':
+              this.passwordError = 'Password is not correct';
+              break;
+            case 'auth/user-disabled':
+              this.emailError = 'Email with password recovery has been sent';
+              break;
+            default:
+              this.emailError = 'Unknown error. Try again';
+              break;
+          }
+          this.disabled = false;
+        });
+      }
+    },
+    validateEmail(email) {
+      /* eslint-disable max-len */
+      const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
     },
   },
   components: {

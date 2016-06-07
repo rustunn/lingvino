@@ -28,6 +28,11 @@ router.map({
   },
 });
 
+router.beforeEach((transition) => {
+  console.log(transition);
+  transition.next();
+});
+
 router.redirect({
   // redirect any not-found route to home
   '*': '/',

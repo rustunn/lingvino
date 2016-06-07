@@ -49,6 +49,10 @@ export default {
         return value === 'icon';
       },
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     styles() {
@@ -58,6 +62,7 @@ export default {
         dark: this.textColor === 'dark',
         raised: this.raised,
         icon: this.type === 'icon',
+        disabled: this.disabled,
       };
     },
     iconSrc() {
@@ -120,7 +125,7 @@ div {
   text-align: center;
   line-height: 36px;
   vertical-align: middle;
-  background: 0 0;
+  background: transparent;
   
   &.colored {
     background-color: $mainColor;
@@ -148,18 +153,22 @@ div {
       margin-right: 0px;
     }
   }
+
+  &.disabled {
+    background-color: rgba(158,158,158,.4);
+
+    &:hover, &:active, &:focus {
+      background-color: rgba(158,158,158,.4);
+    }
+  }
   
-  // &:hover {
-  //   background-color: rgba(158,158,158,.2);
+  // &:active {
+  //   background-color: rgba(158,158,158,.4);
   // }
   
-  &:active {
-    background-color: rgba(158,158,158,.4);
-  }
-  
-  &:focus {
-    background-color: rgba(0,0,0,.12);
-  }
+  // &:focus {
+  //   background-color: rgba(0,0,0,.12);
+  // }
   
   img {
     width: 24px;
