@@ -66,7 +66,6 @@ export default {
     display: inline-block;
     appearance: none;
     background-color: white;
-    user-select: none;
     outline: 0;
     box-sizing: border-box;
     border: none;
@@ -76,9 +75,9 @@ export default {
     margin: 20px 0;
     padding: 4px;
     width: calc(100%);
-    background: 0 0;
+    background: transparent;
     text-align: left;
-    color: inherit;
+    color: $grey;
     z-index: 3;
   }
   

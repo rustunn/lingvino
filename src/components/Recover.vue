@@ -1,15 +1,14 @@
 <template>
   <div class="page">
-    <header-el title="Sign In">
+    <header-el title="Password Recovery">
       <button slot="left" icon="back" type="icon" v-link="{ path: '/' }"></button>
     </header-el>
-    <div class="card">
+    <div v-if="!recovered" class="card">
       <text-field type="email" placeholder="Email" :value.sync="email" :error="emailError"></text-field>
-      <text-field type="password" placeholder="Password" :value.sync="password" :error="passwordError"></text-field>
-      <button text-color="light" :raised="true" :colored="true" :disabled="!valid || disabled" @click="signin">Sign In</button>
+      <button text-color="light" :raised="true" :colored="true" :disabled="!valid || disabled" @click="recover">Recover</button>
     </div>
-    <div class="card">
-      <button v-link:="{ path: 'recover'}" text-color="dark" :raised="false" :colored="false">Recover Password</button>
+    <div v-else class="card">
+      <h3 class="title">Password recovery email sent</h3>
     </div>
   </div>
 </template>
@@ -25,19 +24,17 @@ export default {
   data() {
     return {
       email: '',
-      password: '',
       emailError: '',
-      passwordError: '',
       disabled: false,
+      recovered: false,
     };
   },
   computed: {
     valid() {
       let val = false;
       const emptyEmail = this.email.length === 0;
-      const emptyPassword = this.password.length === 0;
       const emailError = this.emailError.length > 0;
-      if (!emptyEmail && !emptyPassword && !emailError) {
+      if (!emptyEmail && !emailError) {
         val = true;
       }
       return val;
@@ -53,24 +50,20 @@ export default {
     },
   },
   methods: {
-    signin() {
+    recover() {
       if (this.valid) {
         this.disabled = true;
-        firebase.auth().signInWithEmailAndPassword(this.email, this.password)
+        firebase.auth().sendPasswordResetEmail(this.email)
+        .then(() => {
+          this.recovered = true;
+        })
         .catch(error => {
           switch (error.code) {
             case 'auth/user-not-found':
-            case 'auth/invalid-credential':
               this.emailError = 'User with such email does not exist';
               break;
             case 'auth/invalid-email':
               this.emailError = 'This is not a valid email';
-              break;
-            case 'auth/wrong-password':
-              this.passwordError = 'Password is not correct';
-              break;
-            case 'auth/user-disabled':
-              this.emailError = 'Email with password recovery has been sent';
               break;
             default:
               this.emailError = 'Unknown error. Try again';

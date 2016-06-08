@@ -6,6 +6,10 @@
     <div class="player">
       <div class="timing">
         <span class="start-time text">{{ currentTime | toTime }}</span>
+        <div v-if="loading" class="buffer">
+          <spinner :size="16" :colored="false"></spinner>
+          <span class="buffering text">Loading...</span>
+        </div>
         <div v-if="buffering" class="buffer">
           <spinner :size="16" :colored="false"></spinner>
           <span class="buffering text">Buffering...</span>
@@ -17,12 +21,14 @@
         <div class="bar" :style="barWidth"></div>
         <input v-if="controls" type="range" class="slider" min="0" :max="duration" v-model="currentTime" @touchStart="sliderTouched" @touchEnd="sliderReleased">
       </div>
-      <div v-if="controls" class="controls">
-        <button type="icon" icon="previous" @click="previousClicked"></button>
+      <div v-show="!loading" class="controls">
+        <button v-if="controls" type="icon" icon="previous" @click="previousClicked"></button>
         <button type="icon" :icon="buttonIcon" @click="buttonClicked"></button>
-        <button type="icon" icon="next" @click="nextClicked"></button>
+        <button v-if="controls" type="icon" icon="next" @click="nextClicked"></button>
       </div>
-      <audio :src="src" :autoplay="autoplay"></audio>
+      <audio :src="src">
+        <source :src="src" type="audio/mpeg">
+      </audio>
     </div>
   </div>
 </template>
@@ -58,6 +64,7 @@ export default {
       duration: 0,
       currentTime: 0,
       buffered: 0,
+      loading: true,
     };
   },
   attached() {
@@ -92,6 +99,7 @@ export default {
   },
   watch: {
     src() {
+      this.loading = true;
       this.buffered = 0;
       this.currentTime = 0;
     },
@@ -124,6 +132,14 @@ export default {
         this.playing = true;
         if (this.buffering) this.buffering = false;
       };
+
+      this.audio.addEventListener('canplay', () => {
+        if (this.autoplay) this.play();
+      }, false);
+
+      this.audio.addEventListener('loadedmetadata', () => {
+        this.loading = false;
+      }, false);
     },
     sliderTouched() {
       this.pause();

@@ -3,7 +3,7 @@ import Router from 'vue-router';
 import App from './components/App';
 import Home from './components/Home';
 import SignIn from './components/SignIn';
-import Learn from './components/Learn';
+import Recover from './components/Recover';
 import GetStarted from './components/GetStarted';
 import VueValidator from 'vue-validator';
 
@@ -20,8 +20,8 @@ router.map({
   '/signin': {
     component: SignIn,
   },
-  '/learn': {
-    component: Learn,
+  '/recover': {
+    component: Recover,
   },
   '/get-started': {
     component: GetStarted,

@@ -44,6 +44,7 @@ export default {
 
 <style lang="scss">
 @import '../mixins/common';
+@import '../mixins/typography';
 
 * {
   margin: 0;
@@ -51,7 +52,7 @@ export default {
   border: 0;
   -webkit-overflow-scrolling: touch;
   overflow-scrolling: touch;
-  user-select: none;
+  /*user-select: none;*/
 }
 
 html, body {
@@ -64,6 +65,7 @@ html, body {
   margin-bottom: -20px;
   padding-bottom: 20px;
   box-sizing: border-box;
+  z-index: 10;
 }
 
 footer {

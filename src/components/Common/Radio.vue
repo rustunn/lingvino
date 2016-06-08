@@ -39,7 +39,7 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin: 6px;
+  margin: 16px 6px;
   
   .selector {
     position: relative;
