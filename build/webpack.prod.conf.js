@@ -6,6 +6,7 @@ var merge = require('webpack-merge')
 var baseWebpackConfig = require('./webpack.base.conf')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
+// var SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
 var env = process.env.NODE_ENV === 'testing'
   ? require('../config/test.env')
   : config.build.env
@@ -76,6 +77,17 @@ module.exports = merge(baseWebpackConfig, {
     new webpack.optimize.CommonsChunkPlugin({
       name: 'manifest',
       chunks: ['vendor']
-    })
+    }),
+    // new SWPrecacheWebpackPlugin(
+    //   {
+    //     cacheId: 'Lingvino',
+    //     filename: 'lingvino-service-worker.js',
+    //     maximumFileSizeToCacheInBytes: 4194304,
+    //     runtimeCaching: [{
+    //       handler: 'cacheFirst',
+    //       urlPattern: /[.]mp3$/,
+    //     }],
+    //   }
+    // ),
   ]
 })

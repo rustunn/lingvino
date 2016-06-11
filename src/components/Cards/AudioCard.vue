@@ -6,10 +6,6 @@
     <div class="player">
       <div class="timing">
         <span class="start-time text">{{ currentTime | toTime }}</span>
-        <div v-if="loading" class="buffer">
-          <spinner :size="16" :colored="false"></spinner>
-          <span class="buffering text">Loading...</span>
-        </div>
         <div v-if="buffering" class="buffer">
           <spinner :size="16" :colored="false"></spinner>
           <span class="buffering text">Buffering...</span>
@@ -21,7 +17,7 @@
         <div class="bar" :style="barWidth"></div>
         <input v-if="controls" type="range" class="slider" min="0" :max="duration" v-model="currentTime" @touchStart="sliderTouched" @touchEnd="sliderReleased">
       </div>
-      <div v-show="!loading" class="controls">
+      <div class="controls">
         <button v-if="controls" type="icon" icon="previous" @click="previousClicked"></button>
         <button type="icon" :icon="buttonIcon" @click="buttonClicked"></button>
         <button v-if="controls" type="icon" icon="next" @click="nextClicked"></button>
@@ -47,10 +43,6 @@ export default {
       type: Boolean,
       default: false,
     },
-    autoplay: {
-      type: Boolean,
-      default: true,
-    },
     loop: {
       type: Boolean,
       default: false,
@@ -64,7 +56,7 @@ export default {
       duration: 0,
       currentTime: 0,
       buffered: 0,
-      loading: true,
+      played: false,
     };
   },
   attached() {
@@ -91,7 +83,7 @@ export default {
       if (this.playing) {
         icon = 'pause';
       } else {
-        if (this.currentTime === this.duration) icon = 'replay';
+        if (this.played) icon = 'replay';
         else icon = 'play';
       }
       return icon;
@@ -99,9 +91,10 @@ export default {
   },
   watch: {
     src() {
-      this.loading = true;
+      this.playing = false;
       this.buffered = 0;
       this.currentTime = 0;
+      this.played = false;
     },
   },
   methods: {
@@ -122,6 +115,7 @@ export default {
         this.pause();
         this.$emit('audio-ended');
         if (this.loop) this.play();
+        else this.played = true;
       };
 
       this.audio.onwaiting = () => {
@@ -132,14 +126,6 @@ export default {
         this.playing = true;
         if (this.buffering) this.buffering = false;
       };
-
-      this.audio.addEventListener('canplay', () => {
-        if (this.autoplay) this.play();
-      }, false);
-
-      this.audio.addEventListener('loadedmetadata', () => {
-        this.loading = false;
-      }, false);
     },
     sliderTouched() {
       this.pause();
@@ -150,6 +136,7 @@ export default {
     },
     play() {
       this.playing = true;
+      if (this.played) this.played = true;
       this.audio.play();
     },
     pause() {

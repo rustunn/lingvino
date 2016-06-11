@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <header-el title="Password Recovery">
-      <button slot="left" icon="back" type="icon" v-link="{ path: '/' }"></button>
+      <button slot="left" icon="back" type="icon" v-link="{ path: '/signin' }"></button>
     </header-el>
     <div v-if="!recovered" class="card">
       <text-field type="email" placeholder="Email" :value.sync="email" :error="emailError"></text-field>

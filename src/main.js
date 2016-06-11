@@ -28,14 +28,40 @@ router.map({
   },
 });
 
-router.beforeEach((transition) => {
-  console.log(transition);
-  transition.next();
-});
+// router.beforeEach((transition) => {
+//   console.log(transition);
+//   transition.next();
+// });
 
-router.redirect({
-  // redirect any not-found route to home
-  '*': '/',
-});
+// router.redirect({
+//   // redirect any not-found route to home
+//   '*': '/',
+// });
 
 router.start(App, 'app');
+
+// if ('serviceWorker' in navigator) {
+//   navigator.serviceWorker.register('/lingvino-service-worker.js');
+// }
+
+if (localStorage.getItem('lingvinoLang')) {
+  console.log(localStorage.getItem('lingvinoLang'));
+} else {
+  if ('geolocation' in navigator) {
+    navigator.geolocation.getCurrentPosition(position => {
+      /* eslint-disable */
+      const decoder = new google.maps.Geocoder;
+      const latlng = { lat: position.coords.latitude, lng: position.coords.longitude };
+      decoder.geocode({ location: latlng }, (results) => {
+        findLanguage(results[0].formatted_address);
+      });
+    });
+  }
+}
+
+function findLanguage(address) {
+  const isRu = address.indexOf('Russia');
+  const isEn = address.indexOf('USA');
+  if (isRu !== -1) localStorage.setItem('lingvinoLang', 'ru');
+  else localStorage.setItem('lingvinoLang', 'en');
+}
