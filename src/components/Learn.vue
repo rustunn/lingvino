@@ -7,7 +7,7 @@
     <progress-card :progress="progress"></progress-card>
     
     <audio-card v-if="currentLesson" :src="audioSrc" :controls="true" :autoplay="autoplay" :loop="repeat" @next="nextLesson" @previous="prevLesson" @audio-ended="audioEnded">
-      {{currentLesson.title}}
+      {{ say(currentLesson.title) }}
     </audio-card>
     
     <div class="dim" v-if="drawer" transition="dim" @click="toggleDrawer"></div>
@@ -16,7 +16,7 @@
       <div v-for="section in lessons" class="section">
         <ul>
           <li v-for="lesson in section" :class="{ 'selected': lesson === currentLesson }" @click="lessonSelected($parent.$index, $index)">
-            <span>{{lesson.title}}</span>
+            <span>{{ say(lesson.title) }}</span>
             <span v-if="getProgress($parent.$index, $index) > 0 && getProgress($parent.$index, $index) < 100" class="progress-badge">{{getProgress($parent.$index, $index)}}%</span>
             <div v-if="getProgress($parent.$index, $index) >= 100" class="progress-completed"></div>
           </li>
@@ -57,6 +57,7 @@ import lessonsSets from '../data/lessons';
 import {
   user,
   userData,
+  lang,
 } from '../vuex/getters';
 
 import langMixin from '../mixins/lang';
@@ -105,7 +106,12 @@ export default {
     currentLesson() {
       if (this.currentLesson) {
         const storage = firebase.storage();
-        const pathReference = storage.ref(this.currentLesson.src);
+        let src = this.currentLesson.src;
+        if (this.currentLesson.translate) {
+          src += `_${this.lang}`;
+        }
+        src += '.mp3';
+        const pathReference = storage.ref(src);
         pathReference.getDownloadURL().then(url => {
           this.audioSrc = url;
         }).catch(error => {
@@ -184,6 +190,7 @@ export default {
     getters: {
       user,
       userData,
+      lang,
     },
   },
   components: {
@@ -241,6 +248,7 @@ export default {
         min-height: 48px;
         padding: 16px;
         overflow: hidden;
+        cursor: pointer;
         
         &:hover, &.selected {
           background-color: #eee;

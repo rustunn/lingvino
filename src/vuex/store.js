@@ -13,7 +13,7 @@ import {
 const state = {
   user: null,
   userData: null,
-  lang: null,
+  lang: 'en',
 };
 
 const mutations = {
@@ -26,6 +26,8 @@ const mutations = {
   },
   [SET_USER_DATA](st, data) {
     state.userData = data;
+    state.lang = data.lang;
+    localStorage.setItem('lingvino-lang', data.lang);
   },
   [SET_LANG](st, lang) {
     state.lang = lang;

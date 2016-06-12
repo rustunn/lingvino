@@ -18,9 +18,22 @@ import {
 
 export default {
   created() {
-    // const lang = localStorage.getItem('lingvino-lang');
-    // this.setLang(lang);
-    this.setLang('ru');
+    let lang = localStorage.getItem('lingvino-lang');
+    if (lang) {
+      this.setLang(lang);
+    } else {
+      if ('geolocation' in navigator) {
+        navigator.geolocation.getCurrentPosition(position => {
+          const decoder = new google.maps.Geocoder;
+          const latlng = { lat: position.coords.latitude, lng: position.coords.longitude };
+          decoder.geocode({ location: latlng }, (results) => {
+            lang = this.findLanguage(results[0].formatted_address);
+            localStorage.setItem('lingvino-lang', lang);
+            this.setLang(lang);
+          });
+        });
+      }
+    }
 
     const config = {
       apiKey: 'AIzaSyATjcg0lI0NERYfwrXElrkDl9D2_3eS6jc',
@@ -43,6 +56,23 @@ export default {
         this.$router.go('/');
       }
     });
+  },
+  methods: {
+    isRu(address) {
+      let found = false;
+      /* eslint-disable max-len */
+      const countries = ['Russia', 'Belarus', 'Ukraine', 'Kazakhstan', 'Moldova', 'Estonia', 'Latvia', 'Lithuania', 'Georgia', 'Armenia', 'Azerbaijan', 'Uzbekistan', 'Turkmenistan', 'Kyrgyzstan', 'Tajikistan'];
+      countries.forEach(country => {
+        if (address.indexOf(country) !== -1) found = true;
+      });
+      return found;
+    },
+    findLanguage(address) {
+      let lang;
+      if (this.isRu(address)) lang = 'ru';
+      else lang = 'en';
+      return lang;
+    },
   },
   vuex: {
     actions: {

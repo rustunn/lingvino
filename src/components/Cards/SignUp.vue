@@ -14,6 +14,10 @@ import lessonsSets from '../../data/lessons';
 import Button from '../Common/Button';
 import TextField from '../Common/TextField';
 
+import {
+  lang,
+} from '../../vuex/getters';
+
 import langMixin from '../../mixins/lang';
 
 export default {
@@ -89,6 +93,7 @@ export default {
             levels: this.levels,
             currentLesson: [0, 0],
             progress: this.progress,
+            lang: this.lang,
           });
         })
         .catch(error => {
@@ -114,6 +119,11 @@ export default {
       /* eslint-disable max-len */
       const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email);
+    },
+  },
+  vuex: {
+    getters: {
+      lang,
     },
   },
   components: {
