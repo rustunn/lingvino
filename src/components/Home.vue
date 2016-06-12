@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <component :is="page" :user="user" :user-data="userData"></component>
+    <component :is="page"></component>
   </div>
 </template>
 
@@ -8,8 +8,11 @@
 import Splash from './Splash';
 import Learn from './Learn';
 
+import {
+  user,
+} from '../vuex/getters';
+
 export default {
-  props: ['user', 'userData'],
   data() {
     return {
       page: 'splash',
@@ -33,6 +36,11 @@ export default {
       } else {
         this.page = 'splash';
       }
+    },
+  },
+  vuex: {
+    getters: {
+      user,
     },
   },
   components: {

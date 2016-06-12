@@ -1,10 +1,10 @@
 <template>
   <div class="page">
-    <header-el title="Get Started">
+    <header-el :title="say('get-started')">
       <button slot="left" icon="back" type="icon" v-link="{ path: '/' }"></button>
     </header-el>   
-    <info-card v-if="step.component === 'info-card'" :button="step.button" v-on:clicked="clicked">{{step.text}}</info-card>
-    <audio-card v-if="step.component === 'audio-card'" :src="audioSrc" :autoplay="true" v-on:audio-ended="audioEnded">Listen carefully!</audio-card>
+    <info-card v-if="step.component === 'info-card'" :button="say(step.button)" v-on:clicked="clicked">{{ say(step.text) }}</info-card>
+    <audio-card v-if="step.component === 'audio-card'" :src="audioSrc" :autoplay="true" v-on:audio-ended="audioEnded">{{ say('listen-carefully') }}</audio-card>
     <rate-card v-if="step.component === 'rate-card'" v-on:rated="rated"></rate-card>
     <sign-up v-if="step.component === 'sign-up'" :levels="levelsInCourse"></sign-up>
   </div>
@@ -21,19 +21,22 @@ import SignUp from './Cards/SignUp';
 import HeaderEl from './Common/Header';
 import Button from './Common/Button';
 
+import langMixin from '../mixins/lang';
+
 export default {
+  mixins: [langMixin],
   data() {
     return {
       steps: [
         {
           component: 'info-card',
-          text: "Before we begin, let's find out your level of english",
-          button: 'Begin',
+          text: 'need-your-level',
+          button: 'begin',
         },
         {
           component: 'info-card',
-          text: 'Listen to the short story and rank how well you understood it',
-          button: 'Start Listening',
+          text: 'listen-to-stories',
+          button: 'start-listening',
         },
         {
           component: 'audio-card',
@@ -55,8 +58,8 @@ export default {
         },
         {
           component: 'info-card',
-          text: 'Congrats! We successfully identified your level of English!',
-          button: 'Next',
+          text: 'level-found',
+          button: 'next',
         },
         {
           component: 'sign-up',

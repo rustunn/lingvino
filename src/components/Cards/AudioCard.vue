@@ -8,7 +8,7 @@
         <span class="start-time text">{{ currentTime | toTime }}</span>
         <div v-if="buffering" class="buffer">
           <spinner :size="16" :colored="false"></spinner>
-          <span class="buffering text">Buffering...</span>
+          <span class="buffering text">{{ say('buffering') }}</span>
         </div>
         <span class="end-time text">{{ duration | toTime }}</span>
       </div>
@@ -33,7 +33,10 @@
 import Button from '../Common/Button';
 import Spinner from '../Common/Spinner';
 
+import langMixin from '../../mixins/lang';
+
 export default {
+  mixins: [langMixin],
   props: {
     src: {
       type: String,

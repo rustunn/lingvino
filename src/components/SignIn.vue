@@ -4,8 +4,8 @@
       <button slot="left" icon="back" type="icon" v-link="{ path: '/' }"></button>
     </header-el>
     <div class="card">
-      <text-field type="email" placeholder="Email" :value.sync="email" :error="emailError"></text-field>
-      <text-field type="password" :placeholder="say('password')" :value.sync="password" :error="passwordError"></text-field>
+      <text-field type="email" placeholder="Email" :value.sync="email" :error="say(emailError)"></text-field>
+      <text-field type="password" :placeholder="say('password')" :value.sync="password" :error="say(passwordError)"></text-field>
       <button text-color="light" :raised="true" :colored="true" :disabled="!valid || disabled" @click="signin">{{ say('sign-in') }}</button>
     </div>
     <div class="card">
@@ -49,7 +49,7 @@ export default {
   watch: {
     email() {
       if (this.email.length > 5 && !this.validateEmail(this.email)) {
-        this.emailError = 'This is not a valid email';
+        this.emailError = 'incorrect-email';
       } else {
         this.emailError = '';
       }
@@ -64,19 +64,19 @@ export default {
           switch (error.code) {
             case 'auth/user-not-found':
             case 'auth/invalid-credential':
-              this.emailError = 'User with such email does not exist';
+              this.emailError = 'user-not-found';
               break;
             case 'auth/invalid-email':
-              this.emailError = 'This is not a valid email';
+              this.emailError = 'incorrect-email';
               break;
             case 'auth/wrong-password':
-              this.passwordError = 'Password is not correct';
+              this.passwordError = 'incorrect-password';
               break;
             case 'auth/user-disabled':
-              this.emailError = 'Email with password recovery has been sent';
+              this.emailError = 'check-recovery-email';
               break;
             default:
-              this.emailError = 'Unknown error. Try again';
+              this.emailError = 'unknown-error';
               break;
           }
           this.disabled = false;

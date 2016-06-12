@@ -1,8 +1,8 @@
 <template>
   <div class="card">
-    <text-field type="email" placeholder="Email" :value.sync="email" :error="emailError"></text-field>
-    <text-field type="password" placeholder="Password" :value.sync="password" :error="passwordError"></text-field>
-    <button text-color="light" :raised="true" :colored="true" :disabled="disabled || !valid" @click="signup">Sign Up</button>
+    <text-field type="email" :placeholder="say('email')" :value.sync="email" :error="say(emailError)"></text-field>
+    <text-field type="password" :placeholder="say('password')" :value.sync="password" :error="say(passwordError)"></text-field>
+    <button text-color="light" :raised="true" :colored="true" :disabled="disabled || !valid" @click="signup">{{ say('sign-up') }}</button>
   </div>
 </template>
 
@@ -14,7 +14,10 @@ import lessonsSets from '../../data/lessons';
 import Button from '../Common/Button';
 import TextField from '../Common/TextField';
 
+import langMixin from '../../mixins/lang';
+
 export default {
+  mixins: [langMixin],
   props: {
     levels: {
       type: Number,
@@ -63,14 +66,14 @@ export default {
   watch: {
     email() {
       if (this.email.length > 5 && !this.validateEmail(this.email)) {
-        this.emailError = 'This is not a valid email';
+        this.emailError = 'incorrect-email';
       } else {
         this.emailError = '';
       }
     },
     password() {
       if (this.password.length < 6) {
-        this.passwordError = 'Password should be at least 6 characters long';
+        this.passwordError = 'short-password';
       } else {
         this.passwordError = '';
       }
@@ -91,16 +94,16 @@ export default {
         .catch(error => {
           switch (error.code) {
             case 'auth/email-already-in-use':
-              this.emailError = 'User with such email already exist';
+              this.emailError = 'email-in-use';
               break;
             case 'auth/invalid-email':
-              this.emailError = 'This is not a valid email';
+              this.emailError = 'incorrect-password';
               break;
             case 'auth/weak-password':
-              this.passwordError = 'This password is too weak. Pick stronger one';
+              this.passwordError = 'weak-password';
               break;
             default:
-              this.emailError = 'Unknown error. Try again';
+              this.emailError = 'unknown-error';
               break;
           }
           this.disabled = false;

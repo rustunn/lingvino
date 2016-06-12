@@ -4,7 +4,7 @@
       <button slot="left" icon="back" type="icon" v-link="{ path: '/signin' }"></button>
     </header-el>
     <div v-if="!recovered" class="card">
-      <text-field type="email" placeholder="Email" :value.sync="email" :error="emailError"></text-field>
+      <text-field type="email" placeholder="Email" :value.sync="email" :error="say(emailError)"></text-field>
       <button text-color="light" :raised="true" :colored="true" :disabled="!valid || disabled" @click="recover">{{ say('recover') }}</button>
     </div>
     <div v-else class="card">
@@ -46,7 +46,7 @@ export default {
   watch: {
     email() {
       if (this.email.length > 5 && !this.validateEmail(this.email)) {
-        this.emailError = 'This is not a valid email';
+        this.emailError = 'incorrect-email';
       } else {
         this.emailError = '';
       }
@@ -63,13 +63,13 @@ export default {
         .catch(error => {
           switch (error.code) {
             case 'auth/user-not-found':
-              this.emailError = 'User with such email does not exist';
+              this.emailError = 'user-not-found';
               break;
             case 'auth/invalid-email':
-              this.emailError = 'This is not a valid email';
+              this.emailError = 'incorrect-email';
               break;
             default:
-              this.emailError = 'Unknown error. Try again';
+              this.emailError = 'unknown-error';
               break;
           }
           this.disabled = false;

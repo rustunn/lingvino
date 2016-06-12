@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <header-el title="My Lessons">
+    <header-el :title="say('my-lessons')">
       <button slot="left" icon="menu" type="icon" @click="toggleDrawer"></button>
     </header-el>
     
@@ -26,16 +26,16 @@
       <div class="section">
         <ul>
           <li>
-            <span @click="signOut">Sign Out</span>
+            <span @click="signOut">{{ say('sign-out') }}</span>
           </li>
           <li>
-            <span>Change Password</span>
+            <span>{{ say('change-password') }}</span>
           </li>
           <li>
-            <span>Change Email</span>
+            <span>{{say ('change-email') }}</span>
           </li>
           <li>
-            <span>Feedback</span>
+            <span>{{ say('feedback') }}</span>
           </li>
         </ul>
       </div>
@@ -54,8 +54,15 @@ import ProgressCard from './Cards/ProgressCard';
 
 import lessonsSets from '../data/lessons';
 
+import {
+  user,
+  userData,
+} from '../vuex/getters';
+
+import langMixin from '../mixins/lang';
+
 export default {
-  props: ['user', 'userData'],
+  mixins: [langMixin],
   data() {
     return {
       lessonsSets,
@@ -171,6 +178,12 @@ export default {
       let final = Math.floor(num * 100);
       if (final > 100) final = 100;
       return final;
+    },
+  },
+  vuex: {
+    getters: {
+      user,
+      userData,
     },
   },
   components: {

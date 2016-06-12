@@ -1,9 +1,9 @@
 <template>
   <div class="card ranking-card">
     <div class="options-container">
-      <radio v-for="option in options" :checked="option === checkedOption" :value="option.value" v-on:checked="optionChecked">{{option.label}}</radio>
+      <radio v-for="option in options" :checked="option === checkedOption" :value="option.value" v-on:checked="optionChecked">{{ say(option.label) }}</radio>
     </div>
-    <button :raised="true" :colored="true" text-color="light" @click="buttonClicked">Rate</button>
+    <button :raised="true" :colored="true" text-color="light" @click="buttonClicked">{{ say('rate') }}</button>
   </div>
 </template>
 
@@ -11,28 +11,31 @@
 import Radio from '../Common/Radio';
 import Button from '../Common/Button';
 
+import langMixin from '../../mixins/lang';
+
 export default {
+  mixins: [langMixin],
   data() {
     return {
       options: [
         {
-          label: 'Understood everythihng',
+          label: 'rate5',
           value: 5,
         },
         {
-          label: 'Understood everythihng exept some words',
+          label: 'rate4',
           value: 4,
         },
         {
-          label: 'Understood general idea',
+          label: 'rate3',
           value: 3,
         },
         {
-          label: 'Understood some words',
+          label: 'rate2',
           value: 2,
         },
         {
-          label: "Didn't understand anything",
+          label: 'rate1',
           value: 1,
         },
       ],

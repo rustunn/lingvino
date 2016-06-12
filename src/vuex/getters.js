@@ -7,3 +7,7 @@ export function user(state) {
 export function lang(state) {
   return state.lang;
 }
+
+export function userData(state) {
+  return state.userData;
+}
