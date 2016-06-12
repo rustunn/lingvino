@@ -214,7 +214,7 @@ const level3 = {
 
 const level4 = [
   {
-    title: 'into-4',
+    title: 'intro-4',
     src: 'lessons/intro_4',
     reps: 1,
     translate: true,
@@ -273,7 +273,7 @@ const level4 = [
 
 const level5 = [
   {
-    title: 'into-5',
+    title: 'intro-5',
     src: 'lessons/intro_5',
     reps: 1,
     translate: true,

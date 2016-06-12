@@ -10,6 +10,10 @@ import store from '../vuex/store';
 import firebase from 'firebase';
 
 import {
+  user,
+} from '../vuex/getters';
+
+import {
   setUser,
   signOut,
   setUserData,
@@ -21,15 +25,17 @@ export default {
     let lang = localStorage.getItem('lingvino-lang');
     if (lang) {
       this.setLang(lang);
-    } else {
+    } else if (!this.user) {
       if ('geolocation' in navigator) {
         navigator.geolocation.getCurrentPosition(position => {
           const decoder = new google.maps.Geocoder;
           const latlng = { lat: position.coords.latitude, lng: position.coords.longitude };
           decoder.geocode({ location: latlng }, (results) => {
             lang = this.findLanguage(results[0].formatted_address);
-            localStorage.setItem('lingvino-lang', lang);
-            this.setLang(lang);
+            if (!this.user) {
+              localStorage.setItem('lingvino-lang', lang);
+              this.setLang(lang);
+            }
           });
         });
       }
@@ -44,10 +50,10 @@ export default {
 
     firebase.initializeApp(config);
 
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        this.setUser(user);
-        firebase.database().ref(`users/${user.uid}`).on('value', snapshot => {
+    firebase.auth().onAuthStateChanged(User => {
+      if (User) {
+        this.setUser(User);
+        firebase.database().ref(`users/${User.uid}`).on('value', snapshot => {
           this.setUserData(snapshot.val());
         });
         this.$router.go('/');
@@ -80,6 +86,9 @@ export default {
       signOut,
       setUserData,
       setLang,
+    },
+    getters: {
+      user,
     },
   },
   store,
