@@ -1,14 +1,14 @@
 <template>
   <div class="page">
-    <header-el title="Password Recovery">
+    <header-el :title="say('password-recovery')">
       <button slot="left" icon="back" type="icon" v-link="{ path: '/signin' }"></button>
     </header-el>
     <div v-if="!recovered" class="card">
       <text-field type="email" placeholder="Email" :value.sync="email" :error="emailError"></text-field>
-      <button text-color="light" :raised="true" :colored="true" :disabled="!valid || disabled" @click="recover">Recover</button>
+      <button text-color="light" :raised="true" :colored="true" :disabled="!valid || disabled" @click="recover">{{ say('recover') }}</button>
     </div>
     <div v-else class="card">
-      <h3 class="title">Password recovery email sent</h3>
+      <h3 class="title">{{say('recovery-email-sent')}}</h3>
     </div>
   </div>
 </template>
@@ -20,7 +20,10 @@ import Button from './Common/Button';
 import HeaderEl from './Common/Header';
 import TextField from './Common/TextField';
 
+import langMixin from '../mixins/lang';
+
 export default {
+  mixins: [langMixin],
   data() {
     return {
       email: '',

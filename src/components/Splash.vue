@@ -1,12 +1,12 @@
 <template>
   <div class="page">
     <header-el title="Lingvino">
-      <button slot="right" v-link="{ path: '/signin' }" text-color="light" :colored="false" :raised="false">Sign In</button>
+      <button slot="right" v-link="{ path: '/signin' }" text-color="light" :colored="false" :raised="false">{{ say('sign-in') }}</button>
     </header-el>
     <main>
       <div class="card">
-        <h1>Spoken English for Everyone</h1>
-        <button v-link:="{ path: 'get-started'}" :colored="true" text-color="light" :raised="true">Get started</button>
+        <h1>{{ say('home-title') }}</h1>
+        <button v-link:="{ path: 'get-started'}" :colored="true" text-color="light" :raised="true">{{ say('get-started') }}</button>
       </div>
     </main>
   </div>
@@ -16,7 +16,10 @@
 import HeaderEl from './Common/Header';
 import Button from './Common/Button';
 
+import langMixin from '../mixins/lang';
+
 export default {
+  mixins: [langMixin],
   components: {
     Button,
     HeaderEl,

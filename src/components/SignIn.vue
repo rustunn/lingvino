@@ -1,15 +1,15 @@
 <template>
   <div class="page">
-    <header-el title="Sign In">
+    <header-el :title="say('sign-in')">
       <button slot="left" icon="back" type="icon" v-link="{ path: '/' }"></button>
     </header-el>
     <div class="card">
       <text-field type="email" placeholder="Email" :value.sync="email" :error="emailError"></text-field>
-      <text-field type="password" placeholder="Password" :value.sync="password" :error="passwordError"></text-field>
-      <button text-color="light" :raised="true" :colored="true" :disabled="!valid || disabled" @click="signin">Sign In</button>
+      <text-field type="password" :placeholder="say('password')" :value.sync="password" :error="passwordError"></text-field>
+      <button text-color="light" :raised="true" :colored="true" :disabled="!valid || disabled" @click="signin">{{ say('sign-in') }}</button>
     </div>
     <div class="card">
-      <button v-link:="{ path: 'recover'}" text-color="dark" :raised="false" :colored="false">Recover Password</button>
+      <button v-link:="{ path: 'recover'}" text-color="dark" :raised="false" :colored="false">{{ say('forgot-password') }}</button>
     </div>
   </div>
 </template>
@@ -21,7 +21,10 @@ import Button from './Common/Button';
 import HeaderEl from './Common/Header';
 import TextField from './Common/TextField';
 
+import langMixin from '../mixins/lang';
+
 export default {
+  mixins: [langMixin],
   data() {
     return {
       email: '',

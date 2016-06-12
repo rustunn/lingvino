@@ -1,21 +1,27 @@
 <template>
   <div class="container">
-    <router-view :user="user" :user-data="userData"></router-view>
+    <router-view></router-view>
   </div>
   <footer>&#169; Lingvion 2016</footer>
 </template>
 
 <script>
+import store from '../vuex/store';
 import firebase from 'firebase';
 
+import {
+  setUser,
+  signOut,
+  setUserData,
+  setLang,
+} from '../vuex/actions';
+
 export default {
-  data() {
-    return {
-      user: null,
-      userData: null,
-    };
-  },
   created() {
+    // const lang = localStorage.getItem('lingvino-lang');
+    // this.setLang(lang);
+    this.setLang('ru');
+
     const config = {
       apiKey: 'AIzaSyATjcg0lI0NERYfwrXElrkDl9D2_3eS6jc',
       authDomain: 'burning-inferno-7243.firebaseapp.com',
@@ -27,18 +33,26 @@ export default {
 
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        this.user = user;
+        this.setUser(user);
         firebase.database().ref(`users/${user.uid}`).on('value', snapshot => {
-          this.userData = snapshot.val();
+          this.setUserData(snapshot.val());
         });
         this.$router.go('/');
       } else {
-        this.user = null;
-        this.userData = null;
+        this.signOut();
         this.$router.go('/');
       }
     });
   },
+  vuex: {
+    actions: {
+      setUser,
+      signOut,
+      setUserData,
+      setLang,
+    },
+  },
+  store,
 };
 </script>
 
