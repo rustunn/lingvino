@@ -105,7 +105,7 @@ export default {
   border: 0;
   -webkit-overflow-scrolling: touch;
   overflow-scrolling: touch;
-  /*user-select: none;*/
+  user-select: none;
 }
 
 html, body {

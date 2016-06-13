@@ -79,6 +79,7 @@ export default {
     text-align: left;
     color: $grey;
     z-index: 3;
+    user-select: text;
   }
   
   .label {
