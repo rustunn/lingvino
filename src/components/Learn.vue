@@ -10,7 +10,7 @@
       {{ say(currentLesson.title) }}
     </audio-card>
     
-    <div class="dim" v-if="drawer" transition="dim" @click="toggleDrawer"></div>
+    <div class="dim" v-if="drawer" transition="dim" @touchStart="toggleDrawer"></div>
     
     <drawer v-if="drawer" :list="" :first="" :opened.sync="drawer">
       <div v-for="section in lessons" class="section">
