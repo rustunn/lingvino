@@ -169,15 +169,15 @@ export default {
       }
     },
     audioEnded() {
-      if (!this.repeat) {
-        this.nextLesson();
-      }
       const section = this.userData.currentLesson[0];
       const lesson = this.userData.currentLesson[1];
       this.userData.progress[section][lesson]++;
       firebase.database().ref(`users/${this.user.uid}`).update({
         progress: this.userData.progress,
       });
+      if (!this.repeat) {
+        this.nextLesson();
+      }
     },
     getProgress(section, lesson) {
       const num = this.userData.progress[section][lesson] / this.lessons[section][lesson].reps;
