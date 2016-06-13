@@ -33,7 +33,6 @@ export default {
           decoder.geocode({ location: latlng }, (results) => {
             lang = this.findLanguage(results[0].formatted_address);
             if (!this.user) {
-              localStorage.setItem('lingvino-lang', lang);
               this.setLang(lang);
             }
           });

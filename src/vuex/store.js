@@ -16,6 +16,10 @@ const state = {
   lang: 'en',
 };
 
+function saveLangToLocalStore(lang) {
+  localStorage.setItem('lingvino-lang', lang);
+}
+
 const mutations = {
   [SET_USER](st, user) {
     state.user = user;
@@ -27,10 +31,11 @@ const mutations = {
   [SET_USER_DATA](st, data) {
     state.userData = data;
     state.lang = data.lang;
-    localStorage.setItem('lingvino-lang', data.lang);
+    saveLangToLocalStore(data.lang);
   },
   [SET_LANG](st, lang) {
     state.lang = lang;
+    saveLangToLocalStore(lang);
   },
 };
 
