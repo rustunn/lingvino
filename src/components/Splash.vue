@@ -1,6 +1,7 @@
 <template>
   <div class="page">
     <header-el title="Lingvino">
+      <selector slot="left" :slot="[]"></selector>
       <button slot="right" v-link="{ path: '/signin' }" text-color="light" :colored="false" :raised="false">{{ say('sign-in') }}</button>
     </header-el>
     <main>
@@ -15,6 +16,7 @@
 <script>
 import HeaderEl from './Common/Header';
 import Button from './Common/Button';
+import Selector from './Common/Selector';
 
 import langMixin from '../mixins/lang';
 
@@ -23,6 +25,7 @@ export default {
   components: {
     Button,
     HeaderEl,
+    Selector,
   },
 };
 </script>
