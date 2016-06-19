@@ -15,7 +15,7 @@
       <div class="progress-bar">
         <div class="bar" :style="bufferWidth"></div>
         <div class="bar" :style="barWidth"></div>
-        <input v-if="controls" type="range" class="slider" min="0" :max="duration" v-model="currentTime" @touchStart="sliderTouched" @touchEnd="sliderReleased">
+        <input v-if="controls" type="range" class="slider" min="0" :max="duration" v-model="currentTime" @touchStart="sliderTouched" @mouseDown="sliderTouched" @touchEnd="sliderReleased" @mouseUp="sliderReleased">
       </div>
       <div class="controls">
         <button v-if="controls" type="icon" icon="previous" @click="previousClicked"></button>
