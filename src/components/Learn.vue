@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <header-el :title="say('my-lessons')">
-      <button slot="left" icon="menu" type="icon" @click="toggleDrawer"></button>
+      <button slot="left" icon="menu" type="icon" @click="showDrawer"></button>
     </header-el>
     
     <progress-card :progress="progress"></progress-card>
@@ -10,7 +10,7 @@
       {{ say(currentLesson.title) }}
     </audio-card>
     
-    <div class="dim" v-if="drawer" transition="dim" @touchStart="toggleDrawer"></div>
+    <div class="dim" v-if="drawer" transition="dim" @touchStart="hideDrawer" @mouseDown="hideDrawer"></div>
     
     <drawer v-if="drawer" :list="" :first="" :opened.sync="drawer">
       <div v-for="section in lessons" class="section">
@@ -141,6 +141,12 @@ export default {
   methods: {
     signOut() {
       firebase.auth().signOut();
+    },
+    showDrawer() {
+      if (!this.drawer) this.toggleDrawer();
+    },
+    hideDrawer() {
+      if (this.drawer) this.toggleDrawer();
     },
     toggleDrawer() {
       this.drawer = !this.drawer;
