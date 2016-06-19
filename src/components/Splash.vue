@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <header-el title="Lingvino">
-      <selector slot="left" :slot="[]"></selector>
+      <selector slot="left" :options="langs" :selected-id="lang" @selected="langChanged"></selector>
       <button slot="right" v-link="{ path: '/signin' }" text-color="light" :colored="false" :raised="false">{{ say('sign-in') }}</button>
     </header-el>
     <main>
@@ -20,8 +20,29 @@ import Selector from './Common/Selector';
 
 import langMixin from '../mixins/lang';
 
+import {
+  langs,
+} from '../vuex/getters';
+
+import {
+  setLang,
+} from '../vuex/actions';
+
 export default {
   mixins: [langMixin],
+  methods: {
+    langChanged(lang) {
+      this.setLang(lang);
+    },
+  },
+  vuex: {
+    getters: {
+      langs,
+    },
+    actions: {
+      setLang,
+    },
+  },
   components: {
     Button,
     HeaderEl,

@@ -1,12 +1,11 @@
 <template>
   <div class="selector">
     <div class="selected" @click="toggle">
-      <span>Ru</span>
+      <span>{{ selectedId }}</span>
       <img src="/static/icons/ic_expand_more_white_24px.svg">
     </div>
     <ul v-if="opened" transition="list">
-      <li>English</li>
-      <li>Русский</li>
+      <li v-for="option in options" @click="selected(option.id)">{{ option.name }}</li>
     </ul>
   </div>
 </template>
@@ -18,15 +17,23 @@ export default {
       type: Array,
       required: true,
     },
+    selectedId: {
+      type: String,
+      required: true,
+    },
   },
   data() {
     return {
-      opened: false,
+      opened: null,
     };
   },
   methods: {
     toggle() {
       this.opened = !this.opened;
+    },
+    selected(id) {
+      this.$emit('selected', id);
+      this.toggle();
     },
   },
 };

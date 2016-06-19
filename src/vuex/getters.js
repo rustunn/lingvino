@@ -8,6 +8,10 @@ export function lang(state) {
   return state.lang;
 }
 
+export function langs(state) {
+  return state.langs;
+}
+
 export function userData(state) {
   return state.userData;
 }

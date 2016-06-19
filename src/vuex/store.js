@@ -14,6 +14,16 @@ const state = {
   user: null,
   userData: null,
   lang: 'en',
+  langs: [
+    {
+      id: 'en',
+      name: 'English',
+    },
+    {
+      id: 'ru',
+      name: 'Русский',
+    },
+  ],
 };
 
 function saveLangToLocalStore(lang) {
