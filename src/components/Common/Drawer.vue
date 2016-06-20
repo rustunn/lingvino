@@ -42,6 +42,7 @@ export default {
   background: #fafafa;
   transform: translateX(0%);
   transition: transform 0.3s ease-in-out 0s;
+  will-change: transform;
   
   &.open-enter, &.open-leave {
     transform: translateX(-100%);

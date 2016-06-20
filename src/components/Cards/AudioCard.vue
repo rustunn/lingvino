@@ -10,7 +10,7 @@
           <spinner :size="16" :colored="false"></spinner>
           <span class="buffering text">{{ say('buffering') }}</span>
         </div>
-        <span class="end-time text">{{ duration | toTime }}</span>
+        <span v-if="duration !== 999999" class="end-time text">{{ duration | toTime }}</span>
       </div>
       <div class="progress-bar">
         <div class="bar" :style="bufferWidth"></div>
@@ -56,7 +56,7 @@ export default {
       audio: undefined,
       playing: false,
       buffering: false,
-      duration: 0,
+      duration: 999999,
       currentTime: 0,
       buffered: 0,
       played: false,
