@@ -4,7 +4,7 @@
       <button slot="left" icon="back" type="icon" v-link="{ path: '/signin' }"></button>
     </header-el>
     <div v-if="!recovered" class="card">
-      <text-field type="email" placeholder="Email" :value.sync="email" :error="say(emailError)"></text-field>
+      <text-field type="email" placeholder="Email" :value.sync="email" :error="say(emailError)"  @keyup.enter="recover"></text-field>
       <button text-color="light" :raised="true" :colored="true" :disabled="!valid || disabled" @click="recover">{{ say('recover') }}</button>
     </div>
     <div v-else class="card">

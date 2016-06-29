@@ -245,6 +245,7 @@ export default {
       width: 100%;
       height: 12px;
       font-size: 0;
+      margin: 16px 0;
       
       .bar {
         position: absolute;

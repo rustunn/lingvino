@@ -5,7 +5,7 @@
     </header-el>
     <div class="card">
       <text-field type="email" placeholder="Email" :value.sync="email" :error="say(emailError)"></text-field>
-      <text-field type="password" :placeholder="say('password')" :value.sync="password" :error="say(passwordError)"></text-field>
+      <text-field type="password" :placeholder="say('password')" :value.sync="password" :error="say(passwordError)" @keyup.enter="signin"></text-field>
       <button text-color="light" :raised="true" :colored="true" :disabled="!valid || disabled" @click="signin">{{ say('sign-in') }}</button>
     </div>
     <div class="card">

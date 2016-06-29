@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <text-field type="email" :placeholder="say('email')" :value.sync="email" :error="say(emailError)"></text-field>
-    <text-field type="password" :placeholder="say('password')" :value.sync="password" :error="say(passwordError)"></text-field>
+    <text-field type="password" :placeholder="say('password')" :value.sync="password" :error="say(passwordError)" @keyup.enter="signup"></text-field>
     <button text-color="light" :raised="true" :colored="true" :disabled="disabled || !valid" @click="signup">{{ say('sign-up') }}</button>
   </div>
 </template>
