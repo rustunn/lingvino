@@ -7,7 +7,7 @@
     <main>
       <div class="card">
         <h1>{{ say('home-title') }}</h1>
-        <button v-link:="{ path: 'get-started'}" :colored="true" text-color="light" :raised="true">{{ say('get-started') }}</button>
+        <button v-link="{ path: '/get-started'}" :colored="true" text-color="light" :raised="true">{{ say('get-started') }}</button>
       </div>
     </main>
   </div>
