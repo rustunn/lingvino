@@ -211,17 +211,22 @@ export default {
 
 <style lang="scss" scoped>
 .page {
-  .dim.dim-transition {
+  .dim {
     position: absolute;
     left: 0;
     top: 0;
     width: 100%;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.6);;
-    transition: background 0.3s ease-in-out 0s;
+    background: rgba(0, 0, 0, 0.6);
+    will-change: opacity;
+
+    &.dim-transition {
+      transition: opacity 0.3s ease-in-out 0s;
+      opacity: 1;
+    }
     
     &.dim-enter, &.dim-leave {
-      background: rgba(0, 0, 0, 0);
+      opacity: 0;
     }
   }
   
