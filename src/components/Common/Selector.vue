@@ -49,6 +49,7 @@ export default {
     display: flex;
     flex-direction: row;
     align-items: center;
+    cursor: pointer;
 
     span {
       font-size: 16px;
