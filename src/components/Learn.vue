@@ -257,7 +257,7 @@ export default {
         align-items: center;
         justify-content: space-between;
         min-height: 48px;
-        padding: 16px;
+        padding: 8px 16px;
         overflow: hidden;
         cursor: pointer;
         
@@ -277,7 +277,7 @@ export default {
           font-size: 16px;
           font-weight: 400;
           letter-spacing: .04em;
-          line-height: 1;
+          line-height: 24px;
           color: rgba(0,0,0,.87);
         }
         
