@@ -6,18 +6,23 @@
     <div class="player">
       <div class="timing">
         <span class="start-time text">{{ currentTime | toTime }}</span>
+        <div v-if="loading" class="buffer">
+          <spinner :size="16" :colored="false"></spinner>
+          <span class="buffering text">{{ say('loading') }}</span>
+        </div>
         <div v-if="buffering" class="buffer">
           <spinner :size="16" :colored="false"></spinner>
           <span class="buffering text">{{ say('buffering') }}</span>
         </div>
         <span v-if="duration !== 999999" class="end-time text">{{ duration | toTime }}</span>
+        <span v-else class="end-time text">00:00</span>
       </div>
       <div class="progress-bar">
         <div class="bar" :style="bufferWidth"></div>
         <div class="bar" :style="barWidth"></div>
         <input v-if="controls" type="range" class="slider" min="0" :max="duration" v-model="currentTime" @touchStart="sliderTouched" @mouseDown="sliderTouched" @touchEnd="sliderReleased" @mouseUp="sliderReleased">
       </div>
-      <div class="controls">
+      <div v-if="!loading" class="controls">
         <button v-if="controls" type="icon" icon="previous" @click="previousClicked"></button>
         <button type="icon" :icon="buttonIcon" @click="buttonClicked"></button>
         <button v-if="controls" type="icon" icon="next" @click="nextClicked"></button>
@@ -56,6 +61,7 @@ export default {
       audio: undefined,
       playing: false,
       buffering: false,
+      loading: true,
       duration: 999999,
       currentTime: 0,
       buffered: 0,
@@ -94,6 +100,7 @@ export default {
   },
   watch: {
     src() {
+      this.loading = true;
       this.playing = false;
       this.buffered = 0;
       this.currentTime = 0;
@@ -128,6 +135,10 @@ export default {
       this.audio.onplaying = () => {
         this.playing = true;
         if (this.buffering) this.buffering = false;
+      };
+
+      this.audio.onloadedmetadata = () => {
+        this.loading = false;
       };
     },
     sliderTouched() {
