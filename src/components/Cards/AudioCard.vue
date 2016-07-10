@@ -5,7 +5,8 @@
     </h3>
     <div class="player">
       <div class="timing">
-        <span class="start-time text">{{ currentTime | toTime }}</span>
+        <span v-if="!loading" class="start-time text">{{ currentTime | toTime }}</span>
+        <span v-else class="start-time text"></span>
         <div v-if="loading" class="buffer">
           <spinner :size="16" :colored="false"></spinner>
           <span class="buffering text">{{ say('loading') }}</span>
@@ -14,10 +15,10 @@
           <spinner :size="16" :colored="false"></spinner>
           <span class="buffering text">{{ say('buffering') }}</span>
         </div>
-        <span v-if="duration !== 999999" class="end-time text">{{ duration | toTime }}</span>
-        <span v-else class="end-time text">00:00</span>
+        <span v-if="!loading" class="end-time text">{{ duration | toTime }}</span>
+        <span v-else class="end-time text"></span>
       </div>
-      <div class="progress-bar">
+      <div v-if="!loading" class="progress-bar">
         <div class="bar" :style="bufferWidth"></div>
         <div class="bar" :style="barWidth"></div>
         <input v-if="controls" type="range" class="slider" min="0" :max="duration" v-model="currentTime" @touchStart="sliderTouched" @mouseDown="sliderTouched" @touchEnd="sliderReleased" @mouseUp="sliderReleased">
