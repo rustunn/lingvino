@@ -28,15 +28,15 @@
           <li>
             <span @click="signOut">{{ say('sign-out') }}</span>
           </li>
-          <li>
+          <!-- <li>
             <span>{{ say('change-password') }}</span>
           </li>
           <li>
-            <span>{{say ('change-email') }}</span>
+            <span>{{ say ('change-email') }}</span>
           </li>
           <li>
             <span>{{ say('feedback') }}</span>
-          </li>
+          </li> -->
         </ul>
       </div>
     </drawer>
