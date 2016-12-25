@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <header-el :title="say('my-lessons')">
-      <button slot="left" icon="menu" type="icon" @click="showDrawer"></button>
+      <custom-button slot="left" icon="menu" type="icon" @click.native="showDrawer"></custom-button>
     </header-el>
     
     <progress-card :progress="progress"></progress-card>
@@ -10,15 +10,15 @@
       {{ say(currentLesson.title) }}
     </audio-card>
     
-    <div class="dim" v-if="drawer" transition="dim" @touchStart="hideDrawer" @mouseDown="hideDrawer"></div>
+    <div class="dim" v-if="drawer" transition="dim" @touchstart="hideDrawer" @mousedown="hideDrawer"></div>
     
-    <drawer v-if="drawer" :list="" :first="" :opened.sync="drawer">
-      <div v-for="section in lessons" class="section">
+    <drawer v-if="drawer" :opened="drawer" @toggle="toggleDrawer">
+      <div v-for="(section, sectionIdx) in lessons" class="section">
         <ul>
-          <li v-for="lesson in section" :class="{ 'selected': lesson === currentLesson }" @click="lessonSelected($parent.$index, $index)">
+          <li v-for="(lesson, lessonIdx) in section" :class="{ 'selected': lesson === currentLesson }" @click="lessonSelected(sectionIdx, lessonIdx)">
             <span>{{ say(lesson.title) }}</span>
-            <span v-if="getProgress($parent.$index, $index) > 0 && getProgress($parent.$index, $index) < 100" class="progress-badge">{{getProgress($parent.$index, $index)}}%</span>
-            <div v-if="getProgress($parent.$index, $index) >= 100" class="progress-completed"></div>
+            <span v-if="getProgress(sectionIdx, lessonIdx) > 0 && getProgress(sectionIdx, lessonIdx) < 100" class="progress-badge">{{getProgress(sectionIdx, lessonIdx)}}%</span>
+            <div v-if="getProgress(sectionIdx, lessonIdx) >= 100" class="progress-completed"></div>
           </li>
         </ul>
       </div>
@@ -45,20 +45,15 @@
 
 <script>
 import firebase from 'firebase';
+import { mapState } from 'vuex';
 
 import HeaderEl from './Common/Header';
-import Button from './Common/Button';
+import CustomButton from './Common/CustomButton';
 import Drawer from './Common/Drawer';
 import AudioCard from './Cards/AudioCard';
 import ProgressCard from './Cards/ProgressCard';
 
 import lessonsSets from '../data/lessons';
-
-import {
-  user,
-  userData,
-  lang,
-} from '../vuex/getters';
 
 import langMixin from '../mixins/lang';
 
@@ -71,6 +66,9 @@ export default {
       autoplay: false,
       audioSrc: '',
     };
+  },
+  created() {
+    this.updateAudioSrc();
   },
   computed: {
     lessons() {
@@ -101,41 +99,11 @@ export default {
       const lesson = this.userData.currentLesson[1];
       return this.userData.progress[section][lesson] + 1 < this.lessons[section][lesson].reps;
     },
+    ...mapState(['user', 'userData']),
   },
   watch: {
     currentLesson() {
-      if (this.currentLesson) {
-        const storage = firebase.storage();
-        let src = this.currentLesson.src;
-        if (this.currentLesson.translate) {
-          src += `_${this.lang}`;
-        }
-        src += '.mp3';
-        const pathReference = storage.ref(src);
-        pathReference.getDownloadURL().then(url => {
-          this.audioSrc = url;
-        }).catch(error => {
-          switch (error.code) {
-            case 'storage/object_not_found':
-              // File doesn't exist
-              break;
-
-            case 'storage/unauthorized':
-              // User doesn't have permission to access the object
-              break;
-
-            case 'storage/canceled':
-              // User canceled the upload
-              break;
-
-            case 'storage/unknown':
-              // Unknown error occurred, inspect the server response
-              break;
-            default:
-              break;
-          }
-        });
-      }
+      this.updateAudioSrc();
     },
   },
   methods: {
@@ -191,17 +159,44 @@ export default {
       if (final > 100) final = 100;
       return final;
     },
-  },
-  vuex: {
-    getters: {
-      user,
-      userData,
-      lang,
+    updateAudioSrc() {
+      if (this.currentLesson) {
+        const storage = firebase.storage();
+        let src = this.currentLesson.src;
+        if (this.currentLesson.translate) {
+          src += `_${this.lang}`;
+        }
+        src += '.mp3';
+        const pathReference = storage.ref(src);
+        pathReference.getDownloadURL().then(url => {
+          this.audioSrc = url;
+        }).catch(error => {
+          switch (error.code) {
+            case 'storage/object_not_found':
+              // File doesn't exist
+              break;
+
+            case 'storage/unauthorized':
+              // User doesn't have permission to access the object
+              break;
+
+            case 'storage/canceled':
+              // User canceled the upload
+              break;
+
+            case 'storage/unknown':
+              // Unknown error occurred, inspect the server response
+              break;
+            default:
+              break;
+          }
+        });
+      }
     },
   },
   components: {
     HeaderEl,
-    Button,
+    CustomButton,
     Drawer,
     AudioCard,
     ProgressCard,

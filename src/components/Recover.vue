@@ -1,11 +1,13 @@
 <template>
   <div class="page">
     <header-el :title="say('password-recovery')">
-      <button slot="left" icon="back" type="icon" v-link="{ path: '/signin' }"></button>
+      <router-link :to="{ path: '/signin' }" slot="left">
+        <custom-button icon="back" type="icon"></custom-button>
+      </router-link>
     </header-el>
     <div v-if="!recovered" class="card">
-      <text-field type="email" placeholder="Email" :value.sync="email" :error="say(emailError)"  @keyup.enter="recover"></text-field>
-      <button text-color="light" :raised="true" :colored="true" :disabled="!valid || disabled" @click="recover">{{ say('recover') }}</button>
+      <text-field type="email" placeholder="Email" :value="email" :error="say(emailError)" @value-updated="emailUpdated" @keyup.enter="recover"></text-field>
+      <custom-button text-color="light" :raised="true" :colored="true" :disabled="!valid || disabled" @click="recover">{{ say('recover') }}</custom-button>
     </div>
     <div v-else class="card">
       <h3 class="title">{{say('recovery-email-sent')}}</h3>
@@ -16,7 +18,7 @@
 <script>
 import firebase from 'firebase';
 
-import Button from './Common/Button';
+import CustomButton from './Common/CustomButton';
 import HeaderEl from './Common/Header';
 import TextField from './Common/TextField';
 
@@ -81,9 +83,12 @@ export default {
       const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email);
     },
+    emailUpdated(val) {
+      this.email = val;
+    },
   },
   components: {
-    Button,
+    CustomButton,
     TextField,
     HeaderEl,
   },

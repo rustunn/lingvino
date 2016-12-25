@@ -1,8 +1,8 @@
 <template>
   <div class="card">
-    <text-field type="email" :placeholder="say('email')" :value.sync="email" :error="say(emailError)"></text-field>
-    <text-field type="password" :placeholder="say('password')" :value.sync="password" :error="say(passwordError)" @keyup.enter="signup"></text-field>
-    <button text-color="light" :raised="true" :colored="true" :disabled="disabled || !valid" @click="signup">{{ say('sign-up') }}</button>
+    <text-field type="email" :placeholder="say('email')" :value="email" :error="say(emailError)" @value-updated="emailUpdated"></text-field>
+    <text-field type="password" :placeholder="say('password')" :value="password" :error="say(passwordError)" @value-updated="passwordUpdated" @keyup.enter="signup"></text-field>
+    <custom-button text-color="light" :raised="true" :colored="true" :disabled="disabled || !valid" @click.native="signup">{{ say('sign-up') }}</custom-button>
   </div>
 </template>
 
@@ -11,12 +11,8 @@ import firebase from 'firebase';
 
 import lessonsSets from '../../data/lessons';
 
-import Button from '../Common/Button';
+import CustomButton from '../Common/CustomButton';
 import TextField from '../Common/TextField';
-
-import {
-  lang,
-} from '../../vuex/getters';
 
 import langMixin from '../../mixins/lang';
 
@@ -88,7 +84,7 @@ export default {
       if (this.valid) {
         this.disabled = true;
         firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
-        .then((user) => {
+        .then(user => {
           firebase.database().ref(`users/${user.uid}`).set({
             levels: this.levels,
             currentLesson: [0, 0],
@@ -120,14 +116,15 @@ export default {
       const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email);
     },
-  },
-  vuex: {
-    getters: {
-      lang,
+    emailUpdated(val) {
+      this.email = val;
+    },
+    passwordUpdated(val) {
+      this.password = val;
     },
   },
   components: {
-    Button,
+    CustomButton,
     TextField,
   },
 };

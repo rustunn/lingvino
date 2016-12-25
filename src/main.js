@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import store from './vuex/store';
 import App from './components/App';
 import Home from './components/Home';
 import SignIn from './components/SignIn';
@@ -8,23 +9,14 @@ import GetStarted from './components/GetStarted';
 
 Vue.use(Router);
 
-/* eslint-disable no-new */
-const router = new Router({ history: true });
+const routes = [
+  { path: '/', component: Home },
+  { path: '/signin', component: SignIn },
+  { path: '/recover', component: Recover },
+  { path: '/get-started', component: GetStarted },
+];
 
-router.map({
-  '/': {
-    component: Home,
-  },
-  '/signin': {
-    component: SignIn,
-  },
-  '/recover': {
-    component: Recover,
-  },
-  '/get-started': {
-    component: GetStarted,
-  },
-});
+const router = new Router({ routes, mode: 'history' });
 
 // router.beforeEach((transition) => {
 //   console.log(transition);
@@ -36,7 +28,11 @@ router.map({
 //   '*': '/',
 // });
 
-router.start(App, 'app');
+new Vue({
+  router,
+  store,
+  ...App,
+}).$mount('app');
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/service-worker.js');

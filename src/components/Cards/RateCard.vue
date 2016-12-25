@@ -1,15 +1,15 @@
 <template>
   <div class="card ranking-card">
     <div class="options-container">
-      <radio v-for="option in options" :checked="option === checkedOption" :value="option.value" v-on:checked="optionChecked">{{ say(option.label) }}</radio>
+      <radio v-for="option in options" :checked="option === checkedOption" :value="option.value" @checked="optionChecked">{{ say(option.label) }}</radio>
     </div>
-    <button :raised="true" :colored="true" text-color="light" @click="buttonClicked">{{ say('rate') }}</button>
+    <custom-button :raised="true" :colored="true" text-color="light" @click.native="buttonClicked">{{ say('rate') }}</custom-button>
   </div>
 </template>
 
 <script>
 import Radio from '../Common/Radio';
-import Button from '../Common/Button';
+import CustomButton from '../Common/CustomButton';
 
 import langMixin from '../../mixins/lang';
 
@@ -58,7 +58,7 @@ export default {
   },
   components: {
     Radio,
-    Button,
+    CustomButton,
   },
 };
 </script>

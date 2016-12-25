@@ -3,12 +3,12 @@
     <h3>
       <slot></slot>
     </h3>
-    <button text-color="light" :raised="true" :colored="true" @click="clicked">{{button}}</button>
+    <custom-button text-color="light" :raised="true" :colored="true" @click.native="clicked">{{button}}</custom-button>
   </div>
 </template>
 
 <script>
-import Button from '../Common/Button';
+import CustomButton from '../Common/CustomButton';
 
 export default {
   props: {
@@ -23,7 +23,7 @@ export default {
     },
   },
   components: {
-    Button,
+    CustomButton,
   },
 };
 </script>

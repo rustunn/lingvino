@@ -4,9 +4,11 @@
       <span>{{ selectedId }}</span>
       <img src="/static/icons/ic_expand_more_white_24px.svg">
     </div>
-    <ul v-if="opened" transition="list">
-      <li v-for="option in options" @click="selected(option.id)">{{ option.name }}</li>
-    </ul>
+    <transition name="list">
+      <ul v-if="opened">
+        <li v-for="option in options" @click="selected(option.id)">{{ option.name }}</li>
+      </ul>
+    </transition>
   </div>
 </template>
 
@@ -63,7 +65,7 @@ export default {
     }
   }
 
-  ul.list-transition {
+  ul {
     position: absolute;
     left: 16px;
     top: 25px;
@@ -77,14 +79,15 @@ export default {
     box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
     opacity: 1;
     transform-origin: 0% 0%;
+    transform: scale(1);
     transition: transform 0.2s ease-in-out 0s, opacity 0.1s ease-in-out 0s;
 
-    &.list-enter {
+    &.list-enter, &.list-enter-active {
       transform: scale(0.3);
       opacity: 0;
     }
 
-    &.list-leave {
+    &.list-leave-active {
       opacity: 0;
     }
     

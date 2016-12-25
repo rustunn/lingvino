@@ -1,18 +1,14 @@
 <template>
-  <div v-if="opened" transition="open" class="drawer">
-    <slot></slot>
-  </div>
+  <transition name="open">
+    <div v-if="opened" class="drawer">
+      <slot></slot>
+    </div>
+  </transition>
 </template>
 
 <script>
 export default {
   props: {
-    list: {
-      type: Array,
-    },
-    first: {
-      type: Object,
-    },
     opened: {
       type: Boolean,
       default: false,
@@ -20,7 +16,7 @@ export default {
   },
   methods: {
     toggle() {
-      this.opened = !this.opened;
+      this.$emit('toggle');
     },
   },
 };
@@ -41,13 +37,10 @@ export default {
   border-right: 1px solid #e0e0e0;
   background: #fafafa;
   will-change: transform;
-
-  &.open-transition {
-    transform: translateX(0px);
-    transition: transform 0.3s ease-in-out 0s;
-  }
+  transform: translateX(0px);
+  transition: transform 0.3s ease-in-out 0s;
   
-  &.open-enter, &.open-leave {
+  &.open-enter, &.open-enter-acitve, &.open-leave-active {
     transform: translateX(-100%);
   }
 }

@@ -2,49 +2,41 @@
   <div class="page">
     <header-el title="Lingvino">
       <selector slot="left" :options="langs" :selected-id="lang" @selected="langChanged"></selector>
-      <button slot="right" v-link="{ path: '/signin' }" text-color="light" :colored="false" :raised="false">{{ say('sign-in') }}</button>
+      <router-link :to="{ path: '/signin' }" slot="right">
+        <custom-button text-color="light" :colored="false" :raised="false">{{ say('sign-in') }}</custom-button>
+      </router-link>
     </header-el>
     <main>
       <div class="card">
         <h1>{{ say('home-title') }}</h1>
-        <button v-link="{ path: '/get-started'}" :colored="true" text-color="light" :raised="true">{{ say('get-started') }}</button>
+        <router-link :to="{ path: '/get-started' }">
+          <custom-button :colored="true" text-color="light" :raised="true">{{ say('get-started') }}</custom-button>
+        </router-link>
       </div>
     </main>
   </div>
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex';
+
 import HeaderEl from './Common/Header';
-import Button from './Common/Button';
+import CustomButton from './Common/CustomButton';
 import Selector from './Common/Selector';
 
 import langMixin from '../mixins/lang';
 
-import {
-  langs,
-} from '../vuex/getters';
-
-import {
-  setLang,
-} from '../vuex/actions';
-
 export default {
   mixins: [langMixin],
+  computed: mapState(['langs']),
   methods: {
     langChanged(lang) {
       this.setLang(lang);
     },
-  },
-  vuex: {
-    getters: {
-      langs,
-    },
-    actions: {
-      setLang,
-    },
+    ...mapMutations(['setLang']),
   },
   components: {
-    Button,
+    CustomButton,
     HeaderEl,
     Selector,
   },

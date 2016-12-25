@@ -5,12 +5,10 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 import Splash from './Splash';
 import Learn from './Learn';
-
-import {
-  user,
-} from '../vuex/getters';
 
 export default {
   data() {
@@ -18,6 +16,10 @@ export default {
       page: 'splash',
     };
   },
+  created() {
+    this.changePage();
+  },
+  computed: mapState(['user']),
   watch: {
     user() {
       this.changePage();
@@ -36,11 +38,6 @@ export default {
       } else {
         this.page = 'splash';
       }
-    },
-  },
-  vuex: {
-    getters: {
-      user,
     },
   },
   components: {

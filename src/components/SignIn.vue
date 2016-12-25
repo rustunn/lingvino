@@ -1,15 +1,19 @@
 <template>
   <div class="page">
     <header-el :title="say('sign-in')">
-      <button slot="left" icon="back" type="icon" v-link="{ path: '/' }"></button>
+      <router-link :to="{ path: '/' }" slot="left">
+        <custom-button icon="back" type="icon"></custom-button>
+      </router-link>
     </header-el>
     <div class="card">
-      <text-field type="email" placeholder="Email" :value.sync="email" :error="say(emailError)"></text-field>
-      <text-field type="password" :placeholder="say('password')" :value.sync="password" :error="say(passwordError)" @keyup.enter="signin"></text-field>
-      <button text-color="light" :raised="true" :colored="true" :disabled="!valid || disabled" @click="signin">{{ say('sign-in') }}</button>
+      <text-field type="email" placeholder="Email" :value="email" :error="say(emailError)" @value-updated="emailUpdated"></text-field>
+      <text-field type="password" :placeholder="say('password')" :value="password" :error="say(passwordError)" @value-updated="passwordUpdated" @keyup.enter="signin"></text-field>
+      <custom-button text-color="light" :raised="true" :colored="true" :disabled="!valid || disabled" @click.native="signin">{{ say('sign-in') }}</custom-button>
     </div>
     <div class="card">
-      <button v-link:="{ path: 'recover'}" text-color="dark" :raised="false" :colored="false">{{ say('forgot-password') }}</button>
+      <router-link :to="{ path: '/recover' }">
+        <custom-button text-color="dark" :raised="false" :colored="false">{{ say('forgot-password') }}</custom-button>
+      </router-link>
     </div>
   </div>
 </template>
@@ -17,7 +21,7 @@
 <script>
 import firebase from 'firebase';
 
-import Button from './Common/Button';
+import CustomButton from './Common/CustomButton';
 import HeaderEl from './Common/Header';
 import TextField from './Common/TextField';
 
@@ -88,9 +92,15 @@ export default {
       const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email);
     },
+    emailUpdated(val) {
+      this.email = val;
+    },
+    passwordUpdated(val) {
+      this.password = val;
+    },
   },
   components: {
-    Button,
+    CustomButton,
     TextField,
     HeaderEl,
   },

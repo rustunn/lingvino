@@ -1,7 +1,10 @@
 <template>
   <div class="input">
-    <div class="label" v-if="placeholder !== ''" class="placeholder" :class="{ 'raised': focused || value }">{{placeholder}}</div>
-    <input :type="type" v-model="value" @focus="focus" @blur="unfocus">
+    <div class="label placeholder" v-if="placeholder !== ''" :class="{ 'raised': focused || value }">{{placeholder}}</div>
+    <input v-if="type === 'text'" type="text" v-model="realVal" @focus="focus" @blur="unfocus">
+    <input v-if="type === 'password'" type="password" v-model="realVal" @focus="focus" @blur="unfocus">
+    <input v-if="type === 'email'" type="email" v-model="realVal" @focus="focus" @blur="unfocus">
+    <input v-if="type === 'number'" type="number" v-model="realVal" @focus="focus" @blur="unfocus">
     <div class="line" :class="{ 'shown': focused }"></div>
     <div v-if="error" class="error">{{error}}</div>
   </div>
@@ -12,12 +15,12 @@ export default {
   data() {
     return {
       focused: false,
+      realVal: null,
     };
   },
   props: {
     value: {
       required: true,
-      twoWay: true,
     },
     placeholder: {
       type: String,
@@ -25,13 +28,25 @@ export default {
     },
     type: {
       type: String,
-      validator(value) {
-        return value === 'text' || value === 'password' || value === 'email' || value === 'number';
+      validator(val) {
+        const values = ['text', 'password', 'email', 'number'];
+        return values.includes(val);
       },
       default: 'text',
     },
     error: {
       type: String,
+    },
+  },
+  created() {
+    this.updateRealVal(this.value);
+  },
+  watch: {
+    value(val) {
+      this.updateRealVal(val);
+    },
+    realVal(val) {
+      this.$emit('value-updated', val);
     },
   },
   methods: {
@@ -40,6 +55,9 @@ export default {
     },
     unfocus() {
       this.focused = false;
+    },
+    updateRealVal(val) {
+      this.realVal = val;
     },
   },
 };

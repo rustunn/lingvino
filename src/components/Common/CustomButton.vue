@@ -1,5 +1,5 @@
 <template>
-  <div :class="styles">
+  <div class="button" :class="styles">
     <img v-if="icon" :src="iconSrc">
     <slot></slot>
   </div>
@@ -101,7 +101,7 @@ export default {
 <style lang="scss" scoped>
 @import '../../mixins/colors';
 
-div {
+.button {
   border-radius: 2px;
   position: relative;
   height: 36px;

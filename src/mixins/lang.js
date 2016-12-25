@@ -1,8 +1,6 @@
-import dictionary from '../data/dictionary';
+import { mapState } from 'vuex';
 
-import {
-  lang,
-} from '../vuex/getters';
+import dictionary from '../data/dictionary';
 
 export default {
   data() {
@@ -10,14 +8,10 @@ export default {
       dictionary,
     };
   },
+  computed: mapState(['lang']),
   methods: {
     say(key) {
       return this.dictionary[this.lang][key];
-    },
-  },
-  vuex: {
-    getters: {
-      lang,
     },
   },
 };

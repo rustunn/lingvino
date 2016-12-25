@@ -1,24 +1,15 @@
 <template>
-  <div class="container">
-    <router-view></router-view>
+  <div class="lingvino">
+    <div class="container">
+      <router-view></router-view>
+    </div>
+    <footer>&#169; Lingvion 2016</footer>
   </div>
-  <footer>&#169; Lingvion 2016</footer>
 </template>
 
 <script>
-import store from '../vuex/store';
 import firebase from 'firebase';
-
-import {
-  user,
-} from '../vuex/getters';
-
-import {
-  setUser,
-  signOut,
-  setUserData,
-  setLang,
-} from '../vuex/actions';
+import { mapState, mapMutations } from 'vuex';
 
 export default {
   created() {
@@ -28,9 +19,9 @@ export default {
     } else if (!this.user) {
       if ('geolocation' in navigator) {
         navigator.geolocation.getCurrentPosition(position => {
-          const decoder = new google.maps.Geocoder;
+          const decoder = new google.maps.Geocoder();
           const latlng = { lat: position.coords.latitude, lng: position.coords.longitude };
-          decoder.geocode({ location: latlng }, (results) => {
+          decoder.geocode({ location: latlng }, results => {
             lang = this.findLanguage(results[0].formatted_address);
             if (!this.user) {
               this.setLang(lang);
@@ -55,13 +46,14 @@ export default {
         firebase.database().ref(`users/${User.uid}`).on('value', snapshot => {
           this.setUserData(snapshot.val());
         });
-        this.$router.go('/');
+        this.$router.push('/');
       } else {
         this.signOut();
-        this.$router.go('/');
+        this.$router.push('/');
       }
     });
   },
+  computed: mapState(['user']),
   methods: {
     isRu(address) {
       let found = false;
@@ -78,19 +70,8 @@ export default {
       else lang = 'en';
       return lang;
     },
+    ...mapMutations(['setUser', 'signOut', 'setUserData', 'setLang']),
   },
-  vuex: {
-    actions: {
-      setUser,
-      signOut,
-      setUserData,
-      setLang,
-    },
-    getters: {
-      user,
-    },
-  },
-  store,
 };
 </script>
 
@@ -111,27 +92,32 @@ html, body {
   height: 100%;
 }
 
-.container {
+.lingvino {
   position: relative;
-  min-height: 100%;
-  margin-bottom: -20px;
-  padding-bottom: 20px;
-  box-sizing: border-box;
-  z-index: 10;
-}
+  height: 100%;
 
-footer {
-  position: relative;
-  width: 100%;
-  box-sizing: border-box;
-  padding: 0 1.8rem 0 1.8rem;
-  background: #616161;
-  height: 20px;
-  color: white;
-  line-height: 20px;
-  font-size: 12px;
-  text-align: right;
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  .container {
+    position: relative;
+    min-height: 100%;
+    margin-bottom: -20px;
+    padding-bottom: 20px;
+    box-sizing: border-box;
+    z-index: 10;
+  }
+
+  footer {
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 1.8rem 0 1.8rem;
+    background: #616161;
+    height: 20px;
+    color: white;
+    line-height: 20px;
+    font-size: 12px;
+    text-align: right;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  }
 }
 
 .view-transition {

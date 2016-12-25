@@ -1,11 +1,13 @@
 <template>
   <div class="page">
     <header-el :title="say('get-started')">
-      <button slot="left" icon="back" type="icon" v-link="{ path: '/' }"></button>
+      <router-link :to="{ path: '/' }" slot="left">
+        <custom-button icon="back" type="icon"></custom-button>
+      </router-link>
     </header-el>   
-    <info-card v-if="step.component === 'info-card'" :button="say(step.button)" v-on:clicked="clicked">{{ say(step.text) }}</info-card>
-    <audio-card v-if="step.component === 'audio-card'" :src="audioSrc" :autoplay="true" v-on:audio-ended="audioEnded">{{ say('listen-carefully') }}</audio-card>
-    <rate-card v-if="step.component === 'rate-card'" v-on:rated="rated"></rate-card>
+    <info-card v-if="step.component === 'info-card'" :button="say(step.button)" @clicked="clicked">{{ say(step.text) }}</info-card>
+    <audio-card v-if="step.component === 'audio-card'" :src="audioSrc" :autoplay="true" @audio-ended="audioEnded">{{ say('listen-carefully') }}</audio-card>
+    <rate-card v-if="step.component === 'rate-card'" @rated="rated"></rate-card>
     <sign-up v-if="step.component === 'sign-up'" :levels="levelsInCourse"></sign-up>
   </div>
 </template>
@@ -19,7 +21,7 @@ import RateCard from './Cards/RateCard';
 import SignUp from './Cards/SignUp';
 
 import HeaderEl from './Common/Header';
-import Button from './Common/Button';
+import CustomButton from './Common/CustomButton';
 
 import langMixin from '../mixins/lang';
 
@@ -68,35 +70,43 @@ export default {
       stories: [
         [
           {
-            src: 'stories/story1_1.mp3',
+            src: 'stories/story_1.mp3',
             used: false,
           },
           {
-            src: 'stories/story1_2.mp3',
-            used: false,
-          },
-        ],
-        [
-          {
-            src: 'stories/story2_1.mp3',
+            src: 'stories/story_2.mp3',
             used: false,
           },
           {
-            src: 'stories/story2_2.mp3',
-            used: false,
-          },
-          {
-            src: 'stories/story2_3.mp3',
+            src: 'stories/story_3.mp3',
             used: false,
           },
         ],
         [
           {
-            src: 'stories/story3_1.mp3',
+            src: 'stories/story_4.mp3',
             used: false,
           },
           {
-            src: 'stories/story3_2.mp3',
+            src: 'stories/story_5.mp3',
+            used: false,
+          },
+          {
+            src: 'stories/story_6.mp3',
+            used: false,
+          },
+        ],
+        [
+          {
+            src: 'stories/story_7.mp3',
+            used: false,
+          },
+          {
+            src: 'stories/story_8.mp3',
+            used: false,
+          },
+          {
+            src: 'stories/story_9.mp3',
             used: false,
           },
         ],
@@ -206,7 +216,7 @@ export default {
     RateCard,
     SignUp,
     HeaderEl,
-    Button,
+    CustomButton,
   },
 };
 </script>

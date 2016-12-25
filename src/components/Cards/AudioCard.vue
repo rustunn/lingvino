@@ -21,12 +21,12 @@
       <div v-if="!loading" class="progress-bar">
         <div class="bar" :style="bufferWidth"></div>
         <div class="bar" :style="barWidth"></div>
-        <input v-if="controls" type="range" class="slider" min="0" :max="duration" v-model="currentTime" @touchStart="sliderTouched" @mouseDown="sliderTouched" @touchEnd="sliderReleased" @mouseUp="sliderReleased">
+        <input v-if="controls" type="range" class="slider" min="0" :max="duration" v-model="currentTime" @touchstart="sliderTouched" @mousedown="sliderTouched" @touchend="sliderReleased" @mouseup="sliderReleased">
       </div>
       <div v-if="!loading" class="controls">
-        <button v-if="controls" type="icon" icon="previous" @click="previousClicked"></button>
-        <button type="icon" :icon="buttonIcon" @click="buttonClicked"></button>
-        <button v-if="controls" type="icon" icon="next" @click="nextClicked"></button>
+        <custom-button v-if="controls" type="icon" icon="previous" @click.native="previousClicked"></custom-button>
+        <custom-button type="icon" :icon="buttonIcon" @click.native="buttonClicked"></custom-button>
+        <custom-button v-if="controls" type="icon" icon="next" @click.native="nextClicked"></custom-button>
       </div>
       <audio :src="src">
         <source :src="src" type="audio/mpeg">
@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import Button from '../Common/Button';
+import CustomButton from '../Common/CustomButton';
 import Spinner from '../Common/Spinner';
 
 import langMixin from '../../mixins/lang';
@@ -69,7 +69,7 @@ export default {
       played: false,
     };
   },
-  attached() {
+  mounted() {
     this.audio = this.$el.querySelector('audio');
     this.addAudioEvents();
   },
@@ -90,12 +90,9 @@ export default {
     },
     buttonIcon() {
       let icon;
-      if (this.playing) {
-        icon = 'pause';
-      } else {
-        if (this.played) icon = 'replay';
-        else icon = 'play';
-      }
+      if (this.playing) icon = 'pause';
+      else if (this.played) icon = 'replay';
+      else icon = 'play';
       return icon;
     },
   },
@@ -196,7 +193,7 @@ export default {
     },
   },
   components: {
-    Button,
+    CustomButton,
     Spinner,
   },
 };

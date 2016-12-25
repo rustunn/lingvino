@@ -22,10 +22,7 @@ export default {
   },
   methods: {
     clicked() {
-      if (!this.checked) {
-        this.checked = true;
-        if (this.checked) this.$emit('checked', this.value);
-      }
+      if (!this.checked) this.$emit('checked', this.value);
     },
   },
 };
